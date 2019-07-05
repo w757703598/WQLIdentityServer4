@@ -1,0 +1,26 @@
+﻿body {
+    background-image: url('../back.jpg');
+}
+.login-page {
+
+    margin-top:18%;
+}
+ .panel{
+     margin:auto;
+    width:320px;
+}
+.login-page .footer {
+    text-align: right;
+}
+.login-page .login .panel-heading {
+
+    text-align:center;
+    background-color:transparent;
+    border:none;
+
+}
+
+.login .panel-heading .panel-title {
+    font-size: 20px;
+    font-weight: bold;
+}
