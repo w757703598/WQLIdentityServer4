@@ -41,7 +41,7 @@ let router = new Router({
             title: "角色管理",
             icon: "el-icon-s-custom",
             requireAuth: true,
-            role: ['administrator', 'test']
+            role: ['administrator']
           },
           path: '/role',
           component: () => import("./views/RoleManagement.vue"),
@@ -51,6 +51,8 @@ let router = new Router({
           meta: {
             title: "人员管理",
             icon: "el-icon-s-custom",
+              requireAuth: true,
+            role: ['administrator']
           },
           path: '/user',
           component: () => import("./views/UserManagement.vue")
@@ -59,6 +61,8 @@ let router = new Router({
           meta: {
             icon: "el-icon-s-custom",
             title: "声明管理",
+              requireAuth: true,
+            role: ['administrator']
           },
           path: '/claims',
           component: () => import("./views/ClaimManagement.vue")
@@ -67,6 +71,8 @@ let router = new Router({
           meta: {
             icon: "el-icon-s-custom",
             title: "API资源管理",
+              requireAuth: true,
+            role: ['administrator'],
             breadcrumb: [
               { title: "属性配置", name: "ApiProperties" },
               { title: "密钥配置", name: "ApiSecret" },
@@ -84,6 +90,8 @@ let router = new Router({
           meta: {
             icon: "el-icon-s-custom",
             title: "身份资源管理",
+              requireAuth: true,
+            role: ['administrator'],
             breadcrumb: [
               { title: "属性配置", name: "ApiProperties" },
             ]
@@ -99,6 +107,8 @@ let router = new Router({
           meta: {
             icon: "el-icon-s-custom",
             title: "客户端管理",
+              requireAuth: true,
+            role: ['administrator'],
             breadcrumb: [
               { title: "属性配置", name: "ApiProperties" },
               { title: "密钥配置", name: "ApiSecret" },

@@ -78,7 +78,7 @@ namespace WQLIdentityServerAPI
             }
             app.UseCors("Test");
 
-
+            app.UseStaticFiles();
 
             app.UseIdentityServer();
 
@@ -88,19 +88,17 @@ namespace WQLIdentityServerAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", "KnowledgeBaseAPI");
+                c.SwaggerEndpoint("v1/swagger.json", "KnowledgeBaseAPI");
 
-                c.RoutePrefix = string.Empty;
+                //c.RoutePrefix = string.Empty;
 
             });
 
-            app.UseStaticFiles();
 
 
             app.UseMvcWithDefaultRoute();
 
-
-            app.UseMvc();
+            
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

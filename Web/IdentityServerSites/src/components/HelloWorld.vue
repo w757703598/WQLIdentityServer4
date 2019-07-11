@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async callApi() {
-      let res = await this.$http.get("/api/TestValue");
+      let res = await this.$http.get("/api/TestValue/Get");
       if (res) {
         console.info(JSON.stringify(res));
         this.message = res;

@@ -63,7 +63,8 @@
     >
       <el-table-column width="50px" align="center" prop="id" label="序号"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column label="描述">
+      <el-table-column prop="description" label="描述"></el-table-column>
+      <el-table-column label="作用域声明">
         <template slot-scope="scope">
           <el-tag v-for="(item,index) in scope.row.userClaims" :key="index">{{item}}</el-tag>
         </template>

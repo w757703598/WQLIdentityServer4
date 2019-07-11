@@ -2,13 +2,16 @@ import Oidc from 'oidc-client'
 import store from '../store'
 import { Message } from 'element-ui';
 
+
+
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
+  //authority: 'http://10.53.20.175:8005',
   authority: 'http://10.53.28.168:5010',
   client_id: 'vuejsclient',
   redirect_uri: window.location.origin + '/oidc-callback',
   response_type: 'id_token token',
-  scope: 'openid profile offline_access api1',
+  scope: 'openid profile offline_access IdentityServer',
   post_logout_redirect_uri: window.location.origin,
   silent_redirect_uri: window.location.origin + '/silent-renew.html',
   accessTokenExpiringNotificationTime: 250,

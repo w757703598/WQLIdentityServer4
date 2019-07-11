@@ -66,11 +66,11 @@ const handleResult = (res) => {
 //   timeout: 1000,
 // })
 
-axios.defaults.baseURL = 'http://10.53.28.168:5010/';
-axios.defaults.headers = {
-  "Content-Type": "application/json;charset=UTF-8",
-  // Authorization: "bearer " + cookie.get("access_token")
-};
+// axios.defaults.baseURL = 'http://10.53.28.168:5010/';
+// axios.defaults.headers = {
+//   "Content-Type": "application/json;charset=UTF-8",
+//   // Authorization: "bearer " + cookie.get("access_token")
+// };
 
 var http = {
 

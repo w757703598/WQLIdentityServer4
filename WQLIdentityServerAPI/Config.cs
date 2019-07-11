@@ -25,7 +25,7 @@ namespace WQLIdentityServerAPI
         {
             return new List<ApiResource>
             {
-                new ApiResource("base", "My API")
+                new ApiResource("IdentityServer", "IdentityServerAPI")
             };
         }
 
@@ -44,7 +44,7 @@ namespace WQLIdentityServerAPI
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "base" }
+                    AllowedScopes = { "IdentityServer" }
                 },
 
                 // resource owner password grant client
@@ -57,7 +57,7 @@ namespace WQLIdentityServerAPI
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "base" }
+                    AllowedScopes = { "IdentityServer" }
                 },
 
                 // OpenID Connect hybrid flow and client credentials client (MVC)
@@ -79,7 +79,7 @@ namespace WQLIdentityServerAPI
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "base"
+                        "IdentityServer"
                     },
                     AllowOfflineAccess = true
                 },
@@ -100,7 +100,7 @@ namespace WQLIdentityServerAPI
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "base"
+                        "IdentityServer"
                     },
                 },
                 new Client
@@ -118,7 +118,7 @@ namespace WQLIdentityServerAPI
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "base"
+                        "IdentityServer"
                     }
                 }
             };
