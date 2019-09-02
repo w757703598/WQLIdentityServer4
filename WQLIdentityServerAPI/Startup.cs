@@ -40,15 +40,20 @@ namespace WQLIdentityServerAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-
+            //自动转换
             services.ConfigAutoMapper();
 
-
+            //注册认证策略
             services.AddPolicies();
 
-            services.ConfigIdentity(Configuration);
+            services.ConfigDataBase(Configuration);
 
-            services.ConfigIdentityServer(Configuration);
+
+
+            ////注册asp.net Identity
+            //services.ConfigIdentity(Configuration);
+            ////注册Identityserver4认证服务
+            //services.ConfigIdentityServer(Configuration);
 
             //添加认证
             services.ConfigAuthentication(Configuration);
@@ -107,7 +112,7 @@ namespace WQLIdentityServerAPI
             builder.RegisterModule(new AutofacModule());
         }
 
-
+        
 
     }
 }

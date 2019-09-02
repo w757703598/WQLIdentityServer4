@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <el-button @click="callApi">callAPi</el-button>
+    <el-button @click="weixin">企业微信</el-button>
     <el-button @click="getToken">getToken</el-button>
     <el-button @click="getTokenId">getTokenId</el-button>
     <el-button @click="getTokenSessionState">getTokenSessionState</el-button>
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Mgr from "../services/SecurityService";
 export default {
   name: "HelloWorld",
@@ -28,6 +30,34 @@ export default {
     };
   },
   methods: {
+    async weixin() {
+      var axiosInstance = axios.create({
+        timeout: 1000
+      });
+      let message = {
+        msgtype: "markdown",
+        markdown: {
+          content:
+            '<font color="warning"># 重要通知</font>，请相关同事注意: \n ><font color="comment">今天下午五点喝咖啡</font> '
+        }
+      };
+
+      let res = await axiosInstance
+        .post(
+          "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=5b7cb0c8-68d8-4b06-ba6c-9f9cee87cfdd",
+          message,
+          {
+            headers: { "Content-Type": "text/plain" }
+          }
+        )
+        .catch(err => {
+          self.logToken(err);
+        });
+      if (res) {
+        console.info(JSON.stringify(res));
+        this.message = res;
+      }
+    },
     async callApi() {
       let res = await this.$http.get("/api/TestValue/Get");
       if (res) {

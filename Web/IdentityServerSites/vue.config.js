@@ -1,7 +1,6 @@
 
 
 module.exports = {
-  authUrl: "http://10.53.28.168:5010/",
   productionSourceMap: false,
   devServer: {
     host: '0.0.0.0',

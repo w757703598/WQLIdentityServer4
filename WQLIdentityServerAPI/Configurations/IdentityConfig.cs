@@ -14,7 +14,7 @@ namespace WQLIdentityServerAPI.Configurations
 {
     public static class IdentityConfig
     {
-        public static void ConfigIdentity(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigIdentityBySqlServer(this IServiceCollection services, IConfiguration configuration)
         {
             //const string connectionString = @"Server=.;Database=IdentityServer;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -25,6 +25,26 @@ namespace WQLIdentityServerAPI.Configurations
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(opt=> {
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequiredLength = 6;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+        }
+        public static void ConfigIdentityByMysql(this IServiceCollection services, IConfiguration configuration)
+        {
+            //const string connectionString = @"Server=.;Database=IdentityServer;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+                //options.UseSqlServer(connectionString);
+            });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(opt => {
                 opt.Password.RequireLowercase = false;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;

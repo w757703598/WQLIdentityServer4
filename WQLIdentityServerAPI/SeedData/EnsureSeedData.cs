@@ -37,8 +37,6 @@ namespace WQLIdentityServerAPI.SeedData
         {
             if (!await _roleManager.RoleExistsAsync(AuthorizationConsts.AdministrationRole))
             {
-
-
                 var role = new ApplicationRole() { Name = AuthorizationConsts.AdministrationRole, NormalizedName = "Administrator" };
                 var result = await _roleManager.CreateAsync(role);
                 if (!result.Succeeded)

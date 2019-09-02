@@ -244,7 +244,6 @@ router.beforeEach((to, from, next) => {
               if (uilts.CheckPermiss(to.meta.role, sucess)) {
                 next();
               } else {
-
                 next('/accessdenied');
               }
             }
