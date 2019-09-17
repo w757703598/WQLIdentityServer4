@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
@@ -17,7 +18,9 @@ namespace WQLIdentityServerAPI
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile(){
+                    UserClaims={"role","username"}
+                },
             };
         }
 
@@ -25,7 +28,8 @@ namespace WQLIdentityServerAPI
         {
             return new List<ApiResource>
             {
-                new ApiResource("IdentityServer", "IdentityServerAPI")
+                new ApiResource("IdentityServer", "IdentityServerAPI",new List<string>{ JwtClaimTypes.Role})
+
             };
         }
 
@@ -39,7 +43,7 @@ namespace WQLIdentityServerAPI
                 {
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    
+
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -103,22 +107,23 @@ namespace WQLIdentityServerAPI
                         "IdentityServer"
                     },
                 },
+                //管理前端默认客户端
                 new Client
                 {
-                    ClientId = "base",
+                    ClientId = "vuejsclient",
                     ClientName = "base JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-
-                    RedirectUris = { "http://localhost:8080" },
+                    Description="IdentityServer4管理客户端",
+                    RedirectUris = { "http://localhost:8082/oidc-callback", "http://localhost:8082/silent-renew.html", "http://10.53.28.168:8082/oidc-callback", "http://10.53.28.168:8082/silent-renew.html" },
                     PostLogoutRedirectUris = { "http://localhost:8080" },
-                    AllowedCorsOrigins = { "http://localhost:8080" },
-
+                    AllowOfflineAccess=true,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "IdentityServer"
+                        
                     }
                 }
             };

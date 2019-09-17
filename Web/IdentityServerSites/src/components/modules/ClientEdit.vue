@@ -75,6 +75,7 @@
             filterable
             multiple
             default-first-option
+            allow-create
           >
             <el-option
               v-for="(item,index) in allowedGrantTypes"

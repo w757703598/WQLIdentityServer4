@@ -32,7 +32,8 @@ namespace WQLIdentityServerAPI.IdentityServers
         /// Initializes a new instance of the <see cref="CustomResourceOwnerPasswordValidtor{TUser,TRole}"/> class.
         /// </summary>
         /// <param name="userManager">The user manager.</param>
-        /// <param name="signInManager">The sign in manager.</param>
+        /// <param name="roleManager">The sign in manager.</param>
+        /// <param name="signInManager"></param>
         /// <param name="events">The events.</param>
         /// <param name="logger">The logger.</param>
         public CustomResourceOwnerPasswordValidtor(

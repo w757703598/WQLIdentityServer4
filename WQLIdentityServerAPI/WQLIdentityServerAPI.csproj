@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
@@ -33,14 +34,23 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WQLIdentity.Application\WQLIdentity.Application.csproj" />
+    <ProjectReference Include="..\WQLIdentity.Infra.Data.Mysql\WQLIdentity.Infra.Data.Mysql.csproj" />
     <ProjectReference Include="..\WQLIdentity.Infra.Data\WQLIdentity.Infra.Data.csproj" />
     <ProjectReference Include="..\WQLIdentityServer.Infra\WQLIdentityServer.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties host_1json__JSONSchema="" appsettings_1json__JSONSchema="http://json.schemastore.org/bozr" /></VisualStudio></ProjectExtensions>
 
 </Project>

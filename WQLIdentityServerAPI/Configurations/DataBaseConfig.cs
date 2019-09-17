@@ -15,17 +15,21 @@ namespace WQLIdentityServerAPI.Configurations
             var databaseType = configuration.GetSection("Settings")["DatabaseType"];
             if (databaseType.ToLower() == DatabaseConst.Mysql)
             {
+              
+                string connectionString = configuration.GetConnectionString(DatabaseConst.MySqlConnection);
                 //注册asp.net Identity
-                services.ConfigIdentityByMysql(configuration);
+                services.ConfigIdentityByMysql(configuration, connectionString);
                 //注册Identityserver4认证服务
-                services.ConfigIdentityServerByMysql(configuration);
+                services.ConfigIdentityServerByMysql(configuration, connectionString);
+
             }
             else
             {
+                string connectionString = configuration.GetConnectionString(DatabaseConst.SqlServerConnection);
                 //注册asp.net Identity
-                services.ConfigIdentityBySqlServer(configuration);
+                services.ConfigIdentityBySqlServer(configuration, connectionString);
                 //注册Identityserver4认证服务
-                services.ConfigIdentityServerBySqlServer(configuration);
+                services.ConfigIdentityServerBySqlServer(configuration, connectionString);
             }
          
 

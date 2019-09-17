@@ -22,6 +22,18 @@ namespace WQLIdentity.Application.Interfaces
         Task<IdentityResult> DeleteAsync(string userId);
 
         Task<IdentityResult> UpdateAsync(UpdateUserDto userDto);
+        /// <summary>
+        /// 根据手机号判断创建还是返回用户
+        /// </summary>
+        /// <param name="phone">手机号</param>
+        /// <returns></returns>
+        Task<int> CheckOrCreate(string phone);
+        /// <summary>
+        /// 检查手机号是否已经注册
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        Task<bool> CheckUserByPhone(string phone);
         Task<IdentityResult> ChangePasswordAsync(PasswordDto dto);
         /// <summary>
         /// 获取用户角色

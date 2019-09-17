@@ -6,6 +6,7 @@ using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -17,9 +18,9 @@ namespace WQLIdentityServerAPI.IdentityServers
 
     // <summary>
     /// IProfileService to integrate with ASP.NET Identity.
-    /// </summary>
     /// <typeparam name="TUser">The type of the user.</typeparam>
     /// <seealso cref="IdentityServer4.Services.IProfileService" />
+
     public class CustomProfileService<TUser> : IProfileService
         where TUser : ApplicationUser
     {
@@ -27,7 +28,7 @@ namespace WQLIdentityServerAPI.IdentityServers
         /// The claims factory.
         /// </summary>
         protected readonly IUserClaimsPrincipalFactory<TUser> ClaimsFactory;
-
+        
         /// <summary>
         /// The logger
         /// </summary>
@@ -97,7 +98,7 @@ namespace WQLIdentityServerAPI.IdentityServers
 
             var claims = new List<Claim> {
                 //new Claim(JwtClaimTypes.Subject,user.Id.ToString()),
-                new Claim("username",user.Name),
+                new Claim("username",user.Name??""),
                 //new Claim("name",user.Name),
                 new Claim("createdon",user.CreatedOn.ToString()),
                 new Claim("picture",user.Picture??"")

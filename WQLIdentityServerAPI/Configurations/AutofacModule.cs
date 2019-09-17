@@ -4,16 +4,26 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
+using IdentityServer4.EntityFramework.Interfaces;
+using Microsoft.Extensions.Configuration;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Application.Services;
 using WQLIdentity.Domain.Interface;
+using WQLIdentity.Infra.Data;
+using WQLIdentity.Infra.Data.Mysql.Repositorys;
 using WQLIdentity.Infra.Data.Repository;
+using WQLIdentityServerAPI.Configurations.Consts;
+using WQLIdentityServerAPI.IdentityServers.Services;
 
 namespace WQLIdentityServerAPI.Configurations
 {
     internal class AutofacModule : Autofac.Module
     {
-
+        private IConfiguration _configuration;
+        internal AutofacModule( IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -34,10 +44,26 @@ namespace WQLIdentityServerAPI.Configurations
              .Where(t => t.Name.EndsWith("Repository"))
              .AsImplementedInterfaces();
 
+            var databaseType = _configuration.GetSection("Settings")["DatabaseType"];
+            if (databaseType.ToLower() == DatabaseConst.Mysql)
+            {
+                builder.RegisterGeneric(typeof(MysqlApplicationRepository<>)).As(typeof(IApplicationRepository<>));
+                builder.RegisterGeneric(typeof(MysqlConfigurationRepository<>)).As(typeof(IConfigurationRepository<>));
+            }
+            else
+            {
+                builder.RegisterGeneric(typeof(ApplicationRepository<>)).As(typeof(IApplicationRepository<>));
+                builder.RegisterGeneric(typeof(ConfigurationRepository<>)).As(typeof(IConfigurationRepository<>));
+            }
 
-            builder.RegisterGeneric(typeof(ConfigurationRepository<>)).As(typeof(IConfigurationRepository<>));
+
             builder.RegisterGeneric(typeof(ApplicationBaseService<>)).As(typeof(IApplicationBaseService<>));
-            builder.RegisterGeneric(typeof(ApplicationRepository<>)).As(typeof(IApplicationRepository<>));
+            builder.RegisterType<AuthCodeService>().As<IAuthCodeService>();
+
+
+            //builder.RegisterType<MysqlPersistedGrantDbContext>().As<IPersistedGrantDbContext>();
+            //builder.RegisterType<MysqlConfigurationDbContext>().As<IConfigurationDbContext>();
+
             //builder.RegisterGeneric(typeof(BaseService<>)).As(typeof(IBaseService<>));
 
 

@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WQLIdentity.Domain", "WQLId
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WQLIdentity.Application", "WQLIdentity.Application\WQLIdentity.Application.csproj", "{BDB77AA6-4643-48BD-AD8F-67DD327B16B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WQLIdentity.Infra.Data.Mysql", "WQLIdentity.Infra.Data.Mysql\WQLIdentity.Infra.Data.Mysql.csproj", "{68697F34-6538-4466-BE9B-B7B7AA70F913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{BDB77AA6-4643-48BD-AD8F-67DD327B16B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDB77AA6-4643-48BD-AD8F-67DD327B16B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDB77AA6-4643-48BD-AD8F-67DD327B16B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68697F34-6538-4466-BE9B-B7B7AA70F913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68697F34-6538-4466-BE9B-B7B7AA70F913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68697F34-6538-4466-BE9B-B7B7AA70F913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68697F34-6538-4466-BE9B-B7B7AA70F913}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{AE754FC9-50F6-4EAB-B3FD-F4F0963D598A} = {3C7E571A-7FE4-449C-857C-BAA15F372AC9}
 		{EF2AF021-2958-4617-959A-F98AEF226B5E} = {1240A3AC-E0FA-4F4B-A1EA-B1FABAF8E22E}
 		{BDB77AA6-4643-48BD-AD8F-67DD327B16B2} = {846B2535-0B35-4143-A489-79B90CFAEAA5}
+		{68697F34-6538-4466-BE9B-B7B7AA70F913} = {E67237FD-F5C5-4C13-B8CD-74B6EE87B29B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDD02C7E-3CF2-42E9-9BA9-4D981DA7DABA}

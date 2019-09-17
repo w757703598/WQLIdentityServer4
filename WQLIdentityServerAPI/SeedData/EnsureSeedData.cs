@@ -1,7 +1,10 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Infra.Data;
 using WQLIdentity.Infra.Data.Entities;
+using WQLIdentityServerAPI.Configurations.Consts;
 
 namespace WQLIdentityServerAPI.SeedData
 {
@@ -71,35 +75,46 @@ namespace WQLIdentityServerAPI.SeedData
         {
             //using (var scope = _services.GetRequiredService< IServiceScopeFactory>().CreateScope())
             //{
+          
+            var databaseType = services.GetService<IConfiguration>().GetSection("Settings")["DatabaseType"];
+            IConfigurationDbContext configurationDbContext = null;
+            if (databaseType.ToLower() == DatabaseConst.Mysql)
+            {
+                services.GetRequiredService<MysqlPersistedGrantDbContext>().Database.Migrate();
+                configurationDbContext = services.GetRequiredService<MysqlConfigurationDbContext>();
+            }
+            else
+            {
                 services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-                var configurationDbContext = services.GetRequiredService<ConfigurationDbContext>();
+                configurationDbContext = services.GetRequiredService<ConfigurationDbContext>();
+            }
 
-                if (!configurationDbContext.Clients.Any())
+            if (!configurationDbContext.Clients.Any())
+            {
+                foreach (var client in Config.GetClients())
                 {
-                    foreach (var client in Config.GetClients())
-                    {
-                        await configurationDbContext.Clients.AddAsync(client.ToEntity());
-                    }
-                    await configurationDbContext.SaveChangesAsync();
+                    await configurationDbContext.Clients.AddAsync(client.ToEntity());
                 }
+                await configurationDbContext.SaveChangesAsync();
+            }
 
-                if (!configurationDbContext.ApiResources.Any())
+            if (!configurationDbContext.ApiResources.Any())
+            {
+                foreach (var api in Config.GetApiResources())
                 {
-                    foreach (var api in Config.GetApiResources())
-                    {
-                        await configurationDbContext.ApiResources.AddAsync(api.ToEntity());
-                    }
-                    await configurationDbContext.SaveChangesAsync();
+                    await configurationDbContext.ApiResources.AddAsync(api.ToEntity());
                 }
+                await configurationDbContext.SaveChangesAsync();
+            }
 
-                if (!configurationDbContext.IdentityResources.Any())
+            if (!configurationDbContext.IdentityResources.Any())
+            {
+                foreach (var identity in Config.GetIdentityResources())
                 {
-                    foreach (var identity in Config.GetIdentityResources())
-                    {
-                       await  configurationDbContext.IdentityResources.AddAsync(identity.ToEntity());
-                    }
-                    await configurationDbContext.SaveChangesAsync();
+                    await configurationDbContext.IdentityResources.AddAsync(identity.ToEntity());
                 }
+                await configurationDbContext.SaveChangesAsync();
+            }
             //}
             _logger.LogInformation("初始化identityserver信息成功");
         }

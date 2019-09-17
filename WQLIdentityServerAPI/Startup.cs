@@ -77,17 +77,18 @@ namespace WQLIdentityServerAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.ConfigureExceptionMidlleware(_logger);//异常捕获
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
             app.UseCors("Test");
 
             app.UseStaticFiles();
 
             app.UseIdentityServer();
 
-            app.ConfigureExceptionMidlleware(_logger);//异常捕获
+
 
 
             app.UseSwagger();
@@ -100,6 +101,7 @@ namespace WQLIdentityServerAPI
             });
 
 
+            app.UseMvc();
 
             app.UseMvcWithDefaultRoute();
 
@@ -109,7 +111,7 @@ namespace WQLIdentityServerAPI
         public void ConfigureContainer(ContainerBuilder builder)
         {
 
-            builder.RegisterModule(new AutofacModule());
+            builder.RegisterModule(new AutofacModule(Configuration));
         }
 
         

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WQLIdentityServerAPI.SeedData;
 using Autofac.Extensions.DependencyInjection;
+using NLog.Web;
 
 namespace WQLIdentityServerAPI
 {
@@ -17,25 +18,41 @@ namespace WQLIdentityServerAPI
     {
         public static  void Main(string[] args)
         {
-
+            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             Console.Title = "IdentityServer";
 
-            var seed = args.Contains("seed");
-            if (seed)
+            try
             {
-                args = args.Except(new[] { "seed" }).ToArray();
+                var seed = args.Contains("seed");
+                if (seed)
+                {
+                    args = args.Except(new[] { "seed" }).ToArray();
+                }
+
+                var host = CreateWebHostBuilder(args).Build();
+
+
+                EnsureSeedData seedData = new EnsureSeedData();
+                //seedData.EnsureSeedDataAsync(host.Services).Wait();
+                if (seed)
+                {
+                    
+                    seedData.EnsureSeedDataAsync(host.Services).Wait();
+                }
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Stopped program because of exception");
+                throw;
+
+            }
+            finally
+            {
+                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+                NLog.LogManager.Shutdown();
             }
 
-            var host = CreateWebHostBuilder(args).Build();
-
-
-            EnsureSeedData seedData = new EnsureSeedData();
-            //seedData.EnsureSeedDataAsync(host.Services).Wait();
-            if (seed)
-            {
-                seedData.EnsureSeedDataAsync(host.Services).Wait();
-            }
-            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
@@ -44,7 +61,9 @@ namespace WQLIdentityServerAPI
             return WebHost.CreateDefaultBuilder(args)
                     .UseStartup<Startup>()
                     .ConfigureLogging(opt=>opt.AddDebug())
-                    .ConfigureServices(service => service.AddAutofac()).UseConfiguration(config)
+                    .ConfigureServices(service => service.AddAutofac())
+                    .UseConfiguration(config)
+                    .UseNLog()
             ;
         }
     }

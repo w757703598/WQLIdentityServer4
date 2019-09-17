@@ -8,11 +8,11 @@
         :model="userinfo"
         ref="Userform"
       >
-        <el-form-item label="账号:" prop="userName">
-          <el-input size="mini" v-model="userinfo.userName" :disabled="true"></el-input>
-        </el-form-item>
-        <el-form-item label="姓名:" prop="name">
+        <el-form-item label="账号:" prop="name">
           <el-input size="mini" v-model="userinfo.name" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名:" prop="userName">
+          <el-input size="mini" v-model="userinfo.userName" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="旧密码:" prop="oldPassword">
           <el-input size="mini" v-model="userinfo.oldPassword"></el-input>

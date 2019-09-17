@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,6 +120,27 @@ namespace WQLIdentity.Application.Services
             var cliamToRemove = claims.FirstOrDefault(c => c.Type == dto.Type && c.Value == dto.Value);
             var result = await _userManager.RemoveClaimAsync(user, cliamToRemove);
             return result;
+        }
+
+        public async Task<int> CheckOrCreate(string phone)
+        {
+            var user =await _userManager.Users.SingleOrDefaultAsync(d => d.PhoneNumber == phone);
+            if (user == null)
+            {
+                user = new ApplicationUser()
+                {
+                    UserName=phone,
+                    PhoneNumber = phone
+                };
+                var result= await _userManager.CreateAsync(user);
+
+            }
+            return user.Id;
+        }
+        public async  Task<bool> CheckUserByPhone(string phone)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(d => d.PhoneNumber == phone);
+            return user==null;
         }
     }
 }

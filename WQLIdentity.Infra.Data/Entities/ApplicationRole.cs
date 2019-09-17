@@ -16,6 +16,7 @@ namespace WQLIdentity.Infra.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public override int Id { get; set; }
+
         public DateTime CreatedOn { get; set; }
     }
 }

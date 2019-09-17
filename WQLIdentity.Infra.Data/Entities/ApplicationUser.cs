@@ -10,6 +10,7 @@ namespace WQLIdentity.Infra.Data.Entities
 {
     public class ApplicationUser:IdentityUser<int>
     {
+
         public ApplicationUser()
         {
             CreatedOn = DateTime.Now;
@@ -17,6 +18,7 @@ namespace WQLIdentity.Infra.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public override int Id { get; set; }
+
         public string Password { get; set; }
         public string Name { get; set; }
         public DateTime CreatedOn { get; set; }
