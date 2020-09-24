@@ -77,7 +77,7 @@ namespace WQLIdentityServerAPI.SeedData
             //{
           
             var databaseType = services.GetService<IConfiguration>().GetSection("Settings")["DatabaseType"];
-            IConfigurationDbContext configurationDbContext = null;
+            ConfigurationDbContext configurationDbContext = null;
             if (databaseType.ToLower() == DatabaseConst.Mysql)
             {
                 services.GetRequiredService<MysqlPersistedGrantDbContext>().Database.Migrate();
@@ -103,6 +103,15 @@ namespace WQLIdentityServerAPI.SeedData
                 foreach (var api in Config.GetApiResources())
                 {
                     await configurationDbContext.ApiResources.AddAsync(api.ToEntity());
+                }
+                await configurationDbContext.SaveChangesAsync();
+            }
+
+            if (!configurationDbContext.ApiScopes.Any())
+            {
+                foreach (var api in Config.GetApiScopes())
+                {
+                    await configurationDbContext.ApiScopes.AddAsync(api.ToEntity());
                 }
                 await configurationDbContext.SaveChangesAsync();
             }

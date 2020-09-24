@@ -29,6 +29,9 @@ export default {
       result: true
     };
   },
+  mounted() {
+    console.info(this);
+  },
   methods: {
     async weixin() {
       var axiosInstance = axios.create({

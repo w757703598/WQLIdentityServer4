@@ -45,12 +45,45 @@ namespace WQLIdentityServer.Infra.Extensions
                 }
             }
 
+            pagelist.Data.AddRange(result);
+            pagelist.TotalCount = query.Count();
+            pagelist.PageSize = page.PageSize;
+            return pagelist;
+        }
+        public static Pagelist<T> PageBy<T, TKey>(this IEnumerable<T> query, PageInputDto page, Func<T, TKey> orderBy)
+        {
+            var pagelist = new Pagelist<T>();
+            var result = new List<T>();
+            if (page.PageSize <= 0)
+            {
+                if (page.Isdesc)
+                {
+                    result = query.OrderByDescending(orderBy).ToList();
+                }
+                else
+                {
+                    result = query.ToList();
+                }
+
+            }
+            else
+            {
+                if (page.Isdesc)
+                {
+                    result = query.OrderByDescending(orderBy).Skip(page.PageSize * (page.Page - 1)).Take(page.PageSize).ToList();
+
+                }
+                else
+                {
+                    result = query.Skip(page.PageSize * (page.Page - 1)).Take(page.PageSize).ToList();
+                }
+            }
+
 
             pagelist.Data.AddRange(result);
             pagelist.TotalCount = query.Count();
             pagelist.PageSize = page.PageSize;
             return pagelist;
         }
-
     }
 }

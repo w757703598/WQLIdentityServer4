@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AntennaKnowledgeBase.Api.Middleware;
 using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -21,27 +22,46 @@ using WQLIdentity.Application.Interfaces;
 using WQLIdentityServerAPI.Configurations;
 using WQLIdentityServerAPI.Middleware.Exceptions;
 
+
 namespace WQLIdentityServerAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration,ILogger<Startup> logger)
+        private readonly string AllowAnyDomain = "AllowAnyDomain";
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _logger = logger;
-        }
 
+        }
         public IConfiguration Configuration { get; }
-        private readonly ILogger _logger;
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => {
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
+
+            services.AddControllers()
+             .AddJsonOptions(options =>
+             {
+                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+
+             });
+
+            services.ConfigAuthentication(Configuration);
+
             //自动转换
             services.ConfigAutoMapper();
+
+            services.ConfigCors(AllowAnyDomain);
+
+            services.ConfigureSwagger(Configuration);
+
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => {
+            //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //});
+
+
 
             //注册认证策略
             services.AddPolicies();
@@ -57,34 +77,25 @@ namespace WQLIdentityServerAPI
 
             //添加认证
             services.ConfigAuthentication(Configuration);
-
-            services.AddCors(c => c.AddPolicy("Test", policy =>
-            {
-                policy
-                 .AllowAnyOrigin()//允许任何源
-                 .AllowAnyMethod()//允许任何方式
-                 .AllowAnyHeader()//允许任何头
-                 .AllowCredentials();//允许cookie
-            }));
-
-
-
-
-
-            services.ConfigSwagger();
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            app.ConfigureExceptionMidlleware(_logger);//异常捕获
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-            app.UseCors("Test");
+            app.ConfigureExceptionMidlleware(logger);//异常捕获
 
-            app.UseStaticFiles();
+            app.UseRouting();
+
+
+            app.UseCors(AllowAnyDomain);
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+            });
+
 
             app.UseIdentityServer();
 
@@ -94,16 +105,11 @@ namespace WQLIdentityServerAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "KnowledgeBaseAPI");
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "KnowledgeBaseAPI");
 
-                //c.RoutePrefix = string.Empty;
+                c.RoutePrefix = string.Empty;
 
             });
-
-
-            app.UseMvc();
-
-            app.UseMvcWithDefaultRoute();
 
             
         }

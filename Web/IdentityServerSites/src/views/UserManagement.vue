@@ -88,10 +88,11 @@ export default {
       this.config.title = "创建用户";
       this.config.data = {
         confirmPassword: "123456",
-        email: "test@qq.com",
+        department:"天线开发部",
+        email: "test@mobi.com",
         name: "wql",
         passWord: "123456",
-        userName: "test"
+        userName: "030704"
       };
       this.config.show = true;
       this.config.type = 0;

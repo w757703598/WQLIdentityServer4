@@ -8,11 +8,11 @@ using System.Text;
 
 namespace WQLIdentity.Infra.Data
 {
-    public class MysqlConfigurationDbContext : ConfigurationDbContext<MysqlConfigurationDbContext>
+    public class MysqlConfigurationDbContext : ConfigurationDbContext
     {
 
 
-        public MysqlConfigurationDbContext(DbContextOptions<MysqlConfigurationDbContext> options, ConfigurationStoreOptions storeOptions) : base(options, storeOptions)
+        public MysqlConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options, ConfigurationStoreOptions storeOptions) : base(options, storeOptions)
         {
 
         }

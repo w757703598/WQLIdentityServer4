@@ -15,5 +15,8 @@ namespace WQLIdentity.Application.Dtos.ApiResources
         public bool ShowInDiscoveryDocument { get; set; }
         public List<string> UserClaims { get; set; }
         public int ApiResourceId { get; set; }
+
+
+
     }
 }

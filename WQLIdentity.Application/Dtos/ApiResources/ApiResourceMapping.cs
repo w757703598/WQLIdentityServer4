@@ -26,7 +26,7 @@ namespace WQLIdentity.Application.Dtos.ApiResources
 
 
             //apiscret
-            CreateMap<CreateApiSecretDto, ApiSecret>();
+            CreateMap<CreateApiSecretDto, ApiResourceSecret>();
             CreateMap<CreateApiPropertiesDto, ApiResourceProperty>();
         }
     }

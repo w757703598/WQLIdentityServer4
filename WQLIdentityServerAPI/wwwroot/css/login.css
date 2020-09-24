@@ -2,17 +2,16 @@
     background-image: url('../back.jpg');
 }
 .login-page {
-
     margin-top:18%;
 }
- .panel{
-     margin:auto;
+.panel{
+     margin:180px auto;
     width:320px;
 }
-.login-page .footer {
+ .footer {
     text-align: right;
 }
-.login-page .login .panel-heading {
+ .login .panel-heading {
 
     text-align:center;
     background-color:transparent;

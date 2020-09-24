@@ -43,12 +43,16 @@
         <el-form-item v-if="formType==0||formType==1" label="账号:" prop="userName">
           <el-input size="mini" v-model="config.data.userName"></el-input>
         </el-form-item>
-        <el-form-item v-if="formType==0" label="邮箱:" prop="email">
-          <el-input size="mini" v-model="config.data.email"></el-input>
-        </el-form-item>
         <el-form-item v-if="formType==0||formType==1" label="姓名:" prop="name">
           <el-input size="mini" v-model="config.data.name"></el-input>
         </el-form-item>
+        <el-form-item v-if="formType==0||formType==1" label="部门:" prop="department">
+          <el-input size="mini" v-model="config.data.department"></el-input>
+        </el-form-item>
+        <el-form-item v-if="formType==0" label="邮箱:" prop="email">
+          <el-input size="mini" v-model="config.data.email"></el-input>
+        </el-form-item>
+
         <el-form-item v-if="formType==2" label="旧密码:" prop="oldPassword">
           <el-input size="mini" v-model="config.data.oldPassword"></el-input>
         </el-form-item>
@@ -109,6 +113,9 @@ export default {
             message: "请输入正确的邮箱格式",
             trigger: "blur"
           }
+        ],
+        department: [
+          { required: true, message: "请输入部门", trigger: "blur" }
         ],
         oldPassword: [
           { required: true, min: 6, message: "密码至少6位", trigger: "blur" }
@@ -229,7 +236,7 @@ export default {
                   message: "注册成功",
                   type: "success"
                 });
-                this.close(true);
+                //this.close(true);
               }
               break;
             case 1:

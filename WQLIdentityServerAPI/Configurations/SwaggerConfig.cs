@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -12,26 +14,33 @@ namespace WQLIdentityServerAPI.Configurations
 {
     public static class SwaggerConfig
     {
-        public  static void ConfigSwagger(this IServiceCollection services)
+        public  static void ConfigureSwagger(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "IdentityServer",
                     Version = "V1",
                     Description = "用户认证授权中心"
                 });
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    In = "header",
+                    In = ParameterLocation.Header,
                     Description = "Please insert JWT with Bearer into filed",
                     Name = "Authorization",
-                    Type = "apiKey"
+                    Type = SecuritySchemeType.ApiKey
                 });
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
-                    { "Bearer",new string[]{ } }
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference=new OpenApiReference{Type=ReferenceType.SecurityScheme,Id="Bearer"}
+                        },
+                        new List<string>()
+                    }
+
                 });
                 c.IncludeXmlComments(XmlModelsFilePath, true);
                 c.IncludeXmlComments(XmlAPIFilePath, true);

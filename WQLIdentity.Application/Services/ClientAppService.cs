@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Mappers;
@@ -106,11 +107,11 @@ namespace WQLIdentity.Application.Services
 
             if (clientSecret.Hash == HashType.Sha256)
             {
-                secret.Value = clientSecret.Value.Sha256();
+                secret.Value = clientSecret.Value.ToSha256();
             }
             else if (clientSecret.Hash == HashType.Sha512)
             {
-                secret.Value = clientSecret.Value.Sha512();
+                secret.Value = clientSecret.Value.ToSha512();
             }
             secret.Client = client;
 

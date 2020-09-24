@@ -9,9 +9,9 @@ using System.Text;
 
 namespace WQLIdentity.Infra.Data
 {
-    public class MysqlPersistedGrantDbContext : PersistedGrantDbContext<MysqlPersistedGrantDbContext>
+    public class MysqlPersistedGrantDbContext : PersistedGrantDbContext
     {
-        public MysqlPersistedGrantDbContext(DbContextOptions<MysqlPersistedGrantDbContext> options, OperationalStoreOptions storeOptions) : base(options, storeOptions)
+        public MysqlPersistedGrantDbContext(DbContextOptions<PersistedGrantDbContext> options, OperationalStoreOptions storeOptions) : base(options, storeOptions)
         {
 
         }

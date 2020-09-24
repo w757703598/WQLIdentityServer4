@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login_box">
       <div class="login_title">
-        <span>天线知识库</span>
+        <span>授权登陆系统</span>
       </div>
       <div class="login_content">
         <el-form :model="loginForm" ref="loginForm" :rules="rules">
@@ -32,7 +32,7 @@
         </el-form>
       </div>
     </div>
-    <p class="copyright">© 2019 摩比天线技术(深圳)有限公司. All rigthts reserved.</p>
+    <p class="copyright">© 2019 Test有限公司. All rigthts reserved.</p>
   </div>
 </template>
 <script>

@@ -52,7 +52,7 @@ namespace WQLIdentityServerAPI.Configurations
                             sql => sql.MigrationsAssembly(migrationAssembly));
                     };
                 })
-                  .AddAspNetIdentity<ApplicationUser>()
+                .AddAspNetIdentity<ApplicationUser>()
                 .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidtor<ApplicationUser, ApplicationRole>>()
                 .AddExtensionGrantValidator<SmsAuthCodeValidator>()   //短信扩展验证
                 .AddProfileService<CustomProfileService<ApplicationUser>>();

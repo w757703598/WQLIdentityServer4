@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <div class="logo">
-      <img src="../../assets/imgs/mobo-icon.png">
+      <img src="../../assets/imgs/mobo-icon.png" />
       <span></span>
     </div>
     <div class="open-aside">
@@ -10,7 +10,7 @@
 
     <el-dropdown class="header-user-menu" @command="handleCommand">
       <span>
-        <img :src="src" class="user-image">
+        <img :src="src" class="user-image" />
         <i class="user-name">{{username}}</i>
       </span>
       <el-dropdown-menu slot="dropdown">

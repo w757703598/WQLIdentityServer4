@@ -114,28 +114,14 @@ namespace WQLIdentityServerAPI.Controllers
             var result =  _apiresourceService.GetScopes(pageInput, apiresourceId);
             return result;
         }
-        /// <summary>
-        /// 获取scope详细信息
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult<ApiScope>> GetApiScope(int Id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelStateErrors);
-            }
-            var result =await _apiresourceService.GetScope(Id);
-            return result;
-        }
+
         /// <summary>
         /// 添加ApiResourceScope
         /// </summary>
         /// <param name="apiScope"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddApiScope(CreateApiScopeDto apiScope)
+        public async Task<IActionResult> AddApiScope(ApiScopeResourceDto apiScope)
         {
             if (!ModelState.IsValid)
             {
@@ -150,7 +136,7 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="scopeId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> RemoveScope([FromBody]int scopeId)
+        public async Task<IActionResult> RemoveScope(ApiScopeResourceDto scopeId)
         {
             if (!ModelState.IsValid)
             {
@@ -159,21 +145,7 @@ namespace WQLIdentityServerAPI.Controllers
             var result = await _apiresourceService.RemoveScope(scopeId);
             return ResultResponse(result, "删除ApiScope成功");
         }
-        /// <summary>
-        /// 更新ApiScope
-        /// </summary>
-        /// <param name="updateScope"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> UpdateScope(UpdateScopeDto updateScope)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelStateErrors);
-            }
-            var result = await _apiresourceService.UpdateScope(updateScope);
-            return ResultResponse(result, "更新ApiScope成功");
-        }
+
         /// <summary>
         /// 获取ApiSecret列表
         /// </summary>
@@ -181,7 +153,7 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="apiresourceId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<Pagelist<ApiSecret>> GetApiSecrets([FromQuery]PageInputDto pageInput, int apiresourceId)
+        public ActionResult<Pagelist<ApiResourceSecret>> GetApiSecrets([FromQuery]PageInputDto pageInput, int apiresourceId)
         {
             if (!ModelState.IsValid)
             {

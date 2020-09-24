@@ -17,12 +17,12 @@ namespace WQLIdentity.Application.Interfaces
         Task<bool> Remove(int Id);
 
         Pagelist<ApiScopeDto> GetScopes(PageInputDto pageInput, int apiresourceId);
-        Task<ApiScope> GetScope(int scopeId);
-        Task<bool> AddScope(CreateApiScopeDto apiScope);
-        Task<bool> RemoveScope(int scopeId);
-        Task<bool> UpdateScope(UpdateScopeDto scopeDto);
+     
+        Task<bool> AddScope(ApiScopeResourceDto apiScope);
+        Task<bool> RemoveScope(ApiScopeResourceDto apiScope);
 
-        Pagelist<ApiSecret> GetSecrets(PageInputDto pageInput, int apiresourceId);
+
+        Pagelist<ApiResourceSecret> GetSecrets(PageInputDto pageInput, int apiresourceId);
         Task<bool> RemoveSecret(int secretId);
         Task<bool> AddSecret(CreateApiSecretDto apiScope);
 

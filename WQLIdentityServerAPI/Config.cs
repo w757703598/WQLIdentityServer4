@@ -23,12 +23,23 @@ namespace WQLIdentityServerAPI
                 },
             };
         }
+        public static IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new List<ApiScope>
+                {
+                    new ApiScope(name: "IdentityServer.API",   displayName: "IdentityServer Manager"),
 
+                };        
+        }
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource("IdentityServer", "IdentityServerAPI",new List<string>{ JwtClaimTypes.Role})
+                new ApiResource("IdentityServer", "IdentityServerAPI",new List<string>{ JwtClaimTypes.Role })
+                {
+                    Scopes={ "IdentityServer.API" }
+                    
+                }
 
             };
         }
@@ -116,7 +127,7 @@ namespace WQLIdentityServerAPI
                     AllowAccessTokensViaBrowser = true,
                     Description="IdentityServer4管理客户端",
                     RedirectUris = { "http://localhost:8082/oidc-callback", "http://localhost:8082/silent-renew.html", "http://10.53.28.168:8082/oidc-callback", "http://10.53.28.168:8082/silent-renew.html" },
-                    PostLogoutRedirectUris = { "http://localhost:8080" },
+                    PostLogoutRedirectUris = { "http://localhost:8082" },
                     AllowOfflineAccess=true,
                     AllowedScopes =
                     {
