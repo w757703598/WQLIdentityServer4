@@ -4,8 +4,8 @@ import { Message } from 'element-ui'
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
-  authority: 'http://10.53.20.175:8005',
-  //authority: 'http://10.53.20.226:5010',
+  //authority: 'http://10.53.20.175:8005',
+  authority: 'https://10.53.20.226:5011',
   //authority: 'http://wangqianlong.qicp.vip:5001/',
 
   client_id: 'vuejsclient',
@@ -126,6 +126,7 @@ export default class SecurityService {
         .then(function(user) {
           console.log('检测是否登陆')
           if (user == null) {
+            console.log(user)
             self.signIn(returnPath)
             return resolve(false)
           } else {
@@ -271,6 +272,7 @@ export default class SecurityService {
       mgr
         .getUser()
         .then(function(user) {
+          console.info(user)
           if (user == null) {
             self.signIn()
             return resolve(null)

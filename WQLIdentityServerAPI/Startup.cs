@@ -39,15 +39,29 @@ namespace WQLIdentityServerAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //samesite
+            services.AddSameSiteCookiePolicy();
 
-            services.AddControllers()
+
+            services.AddControllersWithViews()
              .AddJsonOptions(options =>
              {
                  options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
 
              });
 
-            services.ConfigAuthentication(Configuration);
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
+            services.Configure<IISServerOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
 
             //自动转换
             services.ConfigAutoMapper();
@@ -66,6 +80,7 @@ namespace WQLIdentityServerAPI
             //注册认证策略
             services.AddPolicies();
 
+            //认证服务器
             services.ConfigDataBase(Configuration);
 
 
@@ -75,7 +90,7 @@ namespace WQLIdentityServerAPI
             ////注册Identityserver4认证服务
             //services.ConfigIdentityServer(Configuration);
 
-            //添加认证
+            //添加认证过滤
             services.ConfigAuthentication(Configuration);
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,33 +98,34 @@ namespace WQLIdentityServerAPI
         {
             app.ConfigureExceptionMidlleware(logger);//异常捕获
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
 
             app.UseCors(AllowAnyDomain);
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-
-            app.UseEndpoints(endpoints => {
-                endpoints.MapControllers();
-            });
 
 
             app.UseIdentityServer();
-
-
-
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", "KnowledgeBaseAPI");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "KnowledgeBaseAPI");
 
-                c.RoutePrefix = string.Empty;
-
+                c.RoutePrefix = "doc";
             });
+
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
 
             
         }

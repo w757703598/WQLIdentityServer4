@@ -29,8 +29,15 @@ namespace WQLIdentityServerAPI.Configurations
 
             var migrationAssembly = typeof(ApplicationUser).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddIdentityServer()
-                
+            services.AddIdentityServer(options =>
+            {
+
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+            })
+
                 .AddDeveloperSigningCredential()
 
                    .AddConfigurationStore(options =>
@@ -51,6 +58,7 @@ namespace WQLIdentityServerAPI.Configurations
                         builder.UseSqlServer(connectionString,
                             sql => sql.MigrationsAssembly(migrationAssembly));
                     };
+                    options.EnableTokenCleanup = true;
                 })
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidtor<ApplicationUser, ApplicationRole>>()
@@ -67,34 +75,19 @@ namespace WQLIdentityServerAPI.Configurations
 
             var migrationAssembly = typeof(MysqlConfigurationDbContext).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
 
-                .AddDeveloperSigningCredential()
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+            })
+               .AddDeveloperSigningCredential()
 
-                   .AddConfigurationStore<MysqlConfigurationDbContext>(options =>
-                   {
-                       //ConfigurationDbContext
-                       options.ConfigureDbContext = builder =>
-                       {
-                           builder.UseMySql(connectionString,
-                               sql =>
-                               {
-                                   sql.MigrationsAssembly(migrationAssembly);
-                                   sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql);
-                               });
-                           //builder.UseMySQL(connectionString, sql =>
-                           //{
-                           //    sql.MigrationsAssembly(migrationAssembly);
-
-                           //});
-                       };
-                       
-         
-                   })
-                .AddOperationalStore<MysqlPersistedGrantDbContext>(options =>
+                .AddConfigurationStore<MysqlConfigurationDbContext>(options =>
                 {
-
-                    //PersistedGrantDbContext
+                    //ConfigurationDbContext
                     options.ConfigureDbContext = builder =>
                     {
                         builder.UseMySql(connectionString,
@@ -109,12 +102,34 @@ namespace WQLIdentityServerAPI.Configurations
 
                         //});
                     };
-                    
+
+
                 })
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidtor<ApplicationUser, ApplicationRole>>()
-                 .AddExtensionGrantValidator<SmsAuthCodeValidator>()   //短信扩展验证
-                .AddProfileService<CustomProfileService<ApplicationUser>>();
+            .AddOperationalStore<MysqlPersistedGrantDbContext>(options =>
+            {
+
+                //PersistedGrantDbContext
+                options.ConfigureDbContext = builder =>
+                {
+                    builder.UseMySql(connectionString,
+                        sql =>
+                        {
+                            sql.MigrationsAssembly(migrationAssembly);
+                            sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql);
+                        });
+                    //builder.UseMySQL(connectionString, sql =>
+                    //{
+                    //    sql.MigrationsAssembly(migrationAssembly);
+
+                    //});
+                    options.EnableTokenCleanup = true;
+                };
+
+            })
+            .AddAspNetIdentity<ApplicationUser>()
+            .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidtor<ApplicationUser, ApplicationRole>>()
+                .AddExtensionGrantValidator<SmsAuthCodeValidator>()   //短信扩展验证
+            .AddProfileService<CustomProfileService<ApplicationUser>>();
 
 
 

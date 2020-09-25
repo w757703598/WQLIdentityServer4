@@ -15,8 +15,8 @@ namespace WQLIdentityServerAPI.Configurations
                 opt.AddPolicy(name, builder => builder
                 //.WithOrigins("10.53.28.165")
                 .AllowAnyOrigin()
-                //.AllowAnyMethod()
-                //.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
 
 
                 .SetIsOriginAllowed((host) => true)

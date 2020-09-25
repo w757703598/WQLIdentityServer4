@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -28,19 +29,28 @@ namespace WQLIdentityServerAPI.Configurations
                 
                 var configUrl = configuration["authUrls"];
                 options.Authority = configUrl;
-                options.RequireHttpsMetadata = false;
-                options.Audience = "IdentityServer";
-                
+                options.RequireHttpsMetadata = true;
+                //options.Audience = "IdentityServer";
+
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
 
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("secret")),
                     ValidateLifetime = true,
-                    RoleClaimType = "role"
+                    RoleClaimType = "role",
+                    ValidateAudience = false
                 };
-
+                IdentityModelEventSource.ShowPII = true;
             });
-
+            // API授权
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IdentityServer", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "IdentityServer");
+                });
+            });
 
 
 

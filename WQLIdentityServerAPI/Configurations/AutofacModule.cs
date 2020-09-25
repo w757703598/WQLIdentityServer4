@@ -49,13 +49,13 @@ namespace WQLIdentityServerAPI.Configurations
             {
                 builder.RegisterGeneric(typeof(MysqlApplicationRepository<>)).As(typeof(IApplicationRepository<>));
                 builder.RegisterGeneric(typeof(MysqlConfigurationRepository<>)).As(typeof(IConfigurationRepository<>));
-                builder.RegisterGeneric(typeof(MysqlApiScopeRepository)).As(typeof(IScopeRepository));
+                builder.RegisterType(typeof(MysqlApiScopeRepository)).As(typeof(IScopeRepository));
             }
             else
             {
                 builder.RegisterGeneric(typeof(ApplicationRepository<>)).As(typeof(IApplicationRepository<>));
                 builder.RegisterGeneric(typeof(ConfigurationRepository<>)).As(typeof(IConfigurationRepository<>));
-                builder.RegisterGeneric(typeof(ApiScopeRepository)).As(typeof(IScopeRepository));
+                builder.RegisterType(typeof(ApiScopeRepository)).As(typeof(IScopeRepository));
             }
 
 
