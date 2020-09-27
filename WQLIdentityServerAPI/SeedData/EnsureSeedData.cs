@@ -1,6 +1,5 @@
 ﻿
 using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Infra.Data;
 using WQLIdentity.Infra.Data.Entities;
@@ -22,14 +19,14 @@ namespace WQLIdentityServerAPI.SeedData
     {
         private UserManager<ApplicationUser> _userManager;
         private RoleManager<ApplicationRole> _roleManager;
-        private  ILogger _logger;
+        private ILogger _logger;
         //private readonly IServiceProvider _services;
 
         public async Task EnsureSeedDataAsync(IServiceProvider services)
         {
             using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                _logger = scope.ServiceProvider.GetRequiredService<ILogger<EnsureSeedData>>();  
+                _logger = scope.ServiceProvider.GetRequiredService<ILogger<EnsureSeedData>>();
                 _userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 _roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
                 await EnsureIdentitySeedAsync();
@@ -49,9 +46,9 @@ namespace WQLIdentityServerAPI.SeedData
                 }
             }
 
-            if (await _userManager.FindByNameAsync(AuthorizationConsts.AdministrationUser)==null)
+            if (await _userManager.FindByNameAsync(AuthorizationConsts.AdministrationUser) == null)
             {
-          
+
 
                 var defaultUser = new ApplicationUser
                 {
@@ -75,7 +72,7 @@ namespace WQLIdentityServerAPI.SeedData
         {
             //using (var scope = _services.GetRequiredService< IServiceScopeFactory>().CreateScope())
             //{
-          
+
             var databaseType = services.GetService<IConfiguration>().GetSection("Settings")["DatabaseType"];
             ConfigurationDbContext configurationDbContext = null;
             if (databaseType.ToLower() == DatabaseConst.Mysql)

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.EntityFramework.Entities;
+﻿using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.ApiResources;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentityServer.Infra.Dto;
@@ -15,7 +11,7 @@ namespace WQLIdentityServerAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize( Policy = PolicyConst.Admin, AuthenticationSchemes = "Bearer")]
+    [Authorize(Policy = PolicyConst.Admin, AuthenticationSchemes = "Bearer")]
     public class ApiResourceController : BaseApiController
     {
         private IApiResourceService _apiresourceService;
@@ -32,7 +28,8 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public  ActionResult<Pagelist<ApiResourceListDto>> GetApiResources([FromQuery]PageInputDto input){
+        public ActionResult<Pagelist<ApiResourceListDto>> GetApiResources([FromQuery]PageInputDto input)
+        {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelStateErrors);
@@ -65,7 +62,7 @@ namespace WQLIdentityServerAPI.Controllers
             {
                 return BadRequest(ModelStateErrors);
             }
-            var result= await _apiresourceService.CreateApiResource(apiResource);
+            var result = await _apiresourceService.CreateApiResource(apiResource);
             return ResultResponse(result, "创建api资源成功");
         }
         /// <summary>
@@ -105,13 +102,13 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="apiresourceId">资源id</param>
         /// <returns></returns>
         [HttpGet]
-        public  ActionResult<Pagelist<ApiScopeDto>> GetApiScopes([FromQuery]PageInputDto pageInput,int apiresourceId)
+        public ActionResult<Pagelist<ApiScopeDto>> GetApiScopes([FromQuery]PageInputDto pageInput, int apiresourceId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelStateErrors);
             }
-            var result =  _apiresourceService.GetScopes(pageInput, apiresourceId);
+            var result = _apiresourceService.GetScopes(pageInput, apiresourceId);
             return result;
         }
 
@@ -128,7 +125,7 @@ namespace WQLIdentityServerAPI.Controllers
                 return BadRequest(ModelStateErrors);
             }
             var result = await _apiresourceService.AddScope(apiScope);
-            return ResultResponse(result,"添加ApiScope成功");
+            return ResultResponse(result, "添加ApiScope成功");
         }
         /// <summary>
         /// 删除scope

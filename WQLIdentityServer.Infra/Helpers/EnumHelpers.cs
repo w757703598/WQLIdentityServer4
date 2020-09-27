@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WQLIdentityServer.Infra.Dto;
 
 namespace WQLIdentityServer.Infra.Helpers

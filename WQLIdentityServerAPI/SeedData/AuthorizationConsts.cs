@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WQLIdentityServerAPI.SeedData
+﻿namespace WQLIdentityServerAPI.SeedData
 {
     public class AuthorizationConsts
     {

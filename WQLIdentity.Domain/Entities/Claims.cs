@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WQLIdentity.Domain.Entities
+﻿namespace WQLIdentity.Domain.Entities
 {
-    public class Claims: Entity
+    public class Claims : Entity
     {
         /// <summary>
         /// 声明类型

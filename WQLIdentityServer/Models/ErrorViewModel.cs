@@ -1,5 +1,3 @@
-using System;
-
 namespace WQLIdentityServer.Models
 {
     public class ErrorViewModel

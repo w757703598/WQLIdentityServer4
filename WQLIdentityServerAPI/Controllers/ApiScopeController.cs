@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using WQLIdentity.Application.Dtos.ApiResources;
 using WQLIdentity.Application.Interfaces;
 
@@ -13,7 +9,7 @@ namespace WQLIdentityServerAPI.Controllers
     [ApiController]
     public class ApiScopeController : BaseApiController
     {
-        private IApiScopeService  _apiScopeService;
+        private IApiScopeService _apiScopeService;
 
 
         public ApiScopeController(IApiScopeService apiScopeService)
@@ -42,7 +38,7 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="scopeName"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> UpdateScope(string  scopeName)
+        public async Task<IActionResult> UpdateScope(string scopeName)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +53,7 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="scopeName"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateScope(ApiScopeDto  apiScope)
+        public async Task<IActionResult> CreateScope(ApiScopeDto apiScope)
         {
             if (!ModelState.IsValid)
             {

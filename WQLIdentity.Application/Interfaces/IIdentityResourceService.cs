@@ -1,7 +1,4 @@
 ﻿using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.IdentityResources;
 using WQLIdentityServer.Infra.Dto;
@@ -30,6 +27,6 @@ namespace WQLIdentity.Application.Interfaces
 
         Task<bool> DeleteIdentityResourcePropertyAsync(int id);
 
-    
+
     }
 }

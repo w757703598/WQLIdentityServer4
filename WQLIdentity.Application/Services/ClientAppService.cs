@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using IdentityModel;
-using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.Clients;
 using WQLIdentity.Application.Interfaces;
@@ -19,13 +14,13 @@ using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace WQLIdentity.Application.Services
 {
-    public class ClientAppService: IClientAppService
+    public class ClientAppService : IClientAppService
     {
         private IConfigurationRepository<Client> _clientRepository;
         private IConfigurationRepository<ClientSecret> _clientSecretRepository;
         private IConfigurationRepository<ClientProperty> _clientPropertyRepository;
         private IMapper _mapper;
-        public ClientAppService(IConfigurationRepository<Client> clientRepository, IConfigurationRepository<ClientSecret> clientSecretRepository, IConfigurationRepository<ClientProperty> clientPropertyRepository,IMapper mapper)
+        public ClientAppService(IConfigurationRepository<Client> clientRepository, IConfigurationRepository<ClientSecret> clientSecretRepository, IConfigurationRepository<ClientProperty> clientPropertyRepository, IMapper mapper)
         {
             _clientRepository = clientRepository;
             _clientSecretRepository = clientSecretRepository;
@@ -35,7 +30,7 @@ namespace WQLIdentity.Application.Services
 
         public async Task<bool> AddClient(CreateClientDto client)
         {
-            await IsExists(client.ClientId,0);
+            await IsExists(client.ClientId, 0);
             var entity = _mapper.Map<Client>(client);
             await _clientRepository.AddAsync(entity);
             var result = await _clientRepository.SaveChangesAsync() > 0;
@@ -63,14 +58,14 @@ namespace WQLIdentity.Application.Services
 
         public Pagelist<ClientListDto> GetClients(PageInputDto pageInput)
         {
-            var clients =  _clientRepository.GetAll().WhereIf(!string.IsNullOrEmpty(pageInput.Search),d=>d.ClientName.Contains(pageInput.Search)).PageBy(pageInput,c=>c.Id);
+            var clients = _clientRepository.GetAll().WhereIf(!string.IsNullOrEmpty(pageInput.Search), d => d.ClientName.Contains(pageInput.Search)).PageBy(pageInput, c => c.Id);
             return _mapper.Map<Pagelist<ClientListDto>>(clients);
 
         }
 
-        public async Task IsExists(string clientId,int Id)
+        public async Task IsExists(string clientId, int Id)
         {
-            var client =await _clientRepository.GetAll().SingleOrDefaultAsync(d => d.ClientId == clientId&&d.Id!= Id);
+            var client = await _clientRepository.GetAll().SingleOrDefaultAsync(d => d.ClientId == clientId && d.Id != Id);
             if (client != null) throw new Exception("clientId不允许重复");
         }
 
@@ -83,7 +78,7 @@ namespace WQLIdentity.Application.Services
 
         public async Task<bool> UpdateClient(UpdateClientDto clientDto)
         {
-            await IsExists(clientDto.ClientId,clientDto.Id);
+            await IsExists(clientDto.ClientId, clientDto.Id);
             var client = await _clientRepository.GetAll().Include(x => x.AllowedGrantTypes)
                 .Include(x => x.RedirectUris)
                 .Include(x => x.PostLogoutRedirectUris)
@@ -123,7 +118,7 @@ namespace WQLIdentity.Application.Services
             var secretToDelete = await _clientSecretRepository.GetAll().Where(x => x.Id == secretId).SingleOrDefaultAsync();
             _clientSecretRepository.Remove(secretToDelete);
 
-           return await _clientSecretRepository.SaveChangesAsync() > 0;
+            return await _clientSecretRepository.SaveChangesAsync() > 0;
         }
 
         public Pagelist<ClientSecretDto> GetClientSecrets(PageInputDto pageInput, int clientId)

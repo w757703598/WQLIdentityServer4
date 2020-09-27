@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using WQLIdentity.Domain.Entities;
 using WQLIdentityServer.Infra.Dto;
 
 namespace WQLIdentity.Application.Interfaces
 {
-    public interface IApplicationBaseService<TEntity> where TEntity: Entity
+    public interface IApplicationBaseService<TEntity> where TEntity : Entity
     {
         bool Add(TEntity obj);
         TEntity GetById<T>(T id);

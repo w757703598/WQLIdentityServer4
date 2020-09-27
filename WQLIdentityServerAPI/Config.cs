@@ -2,11 +2,8 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace WQLIdentityServerAPI
 {
@@ -29,7 +26,7 @@ namespace WQLIdentityServerAPI
                 {
                     new ApiScope(name: "IdentityServer.API",   displayName: "IdentityServer Manager"),
 
-                };        
+                };
         }
         public static IEnumerable<ApiResource> GetApiResources()
         {
@@ -38,7 +35,7 @@ namespace WQLIdentityServerAPI
                 new ApiResource("IdentityServer", "IdentityServerAPI",new List<string>{ JwtClaimTypes.Role })
                 {
                     Scopes={ "IdentityServer.API" }
-                    
+
                 }
 
             };
@@ -134,7 +131,7 @@ namespace WQLIdentityServerAPI
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "IdentityServer"
-                        
+
                     }
                 }
             };

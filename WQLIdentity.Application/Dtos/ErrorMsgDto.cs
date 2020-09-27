@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WQLIdentity.Application.Dtos
+﻿namespace WQLIdentity.Application.Dtos
 {
     public class ErrorMsgDto
     {

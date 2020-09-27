@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.EntityFramework.Entities;
+﻿using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.IdentityResources;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentityServer.Infra.Dto;
@@ -18,7 +14,7 @@ namespace WQLIdentityServerAPI.Controllers
     [Authorize(Policy = PolicyConst.Admin, AuthenticationSchemes = "Bearer")]
     public class IdentityResourceController : BaseApiController
     {
-        private IIdentityResourceService  _identityResourceService;
+        private IIdentityResourceService _identityResourceService;
 
 
         public IdentityResourceController(IIdentityResourceService identityResourceService)
@@ -114,7 +110,7 @@ namespace WQLIdentityServerAPI.Controllers
             {
                 return BadRequest(ModelStateErrors);
             }
-            var result =  _identityResourceService.GetIdentityResourcePropertiesAsync(pageInput, identityResourceId);
+            var result = _identityResourceService.GetIdentityResourcePropertiesAsync(pageInput, identityResourceId);
             return result;
         }
         /// <summary>

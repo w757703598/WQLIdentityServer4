@@ -1,11 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using WQLIdentity.Application.Dtos.Claims;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Domain.Entities;
@@ -43,12 +41,13 @@ namespace WQLIdentityServerAPI.Controllers
                 return BadRequest(ModelStateErrors);
             }
             var temp = _claimService.GetAll().FirstOrDefault(c => c.Type == dto.Type && c.Value == dto.Value);
-            if (temp!=null){
+            if (temp != null)
+            {
                 return ResultResponse(false, "已存在,请勿重复添加");
             }
             var claims = _mapper.Map<Claims>(dto);
-            var result= await _claimService.AddAsync(claims);     
-            return ResultResponse(result,"插入成功");
+            var result = await _claimService.AddAsync(claims);
+            return ResultResponse(result, "插入成功");
         }
         /// <summary>
         /// 获取所有声明
@@ -56,10 +55,10 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="input">分页参数</param>
         /// <returns></returns>
         [HttpGet]
-        public  ActionResult<Pagelist<Claims>> GetClaims([FromQuery] PageInputDto input)
+        public ActionResult<Pagelist<Claims>> GetClaims([FromQuery] PageInputDto input)
         {
             var claims = _claimService.GetAll(input);
-            
+
             return Ok(claims);
         }
         /// <summary>
@@ -78,13 +77,13 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="claimId"></param>
         /// <returns></returns>
         [HttpPost]
-        public  IActionResult RemoveClaim([FromBody]int claimId)
+        public IActionResult RemoveClaim([FromBody]int claimId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelStateErrors);
             }
- 
+
             var result = _claimService.Remove(claimId); ;
             return ResultResponse(result, "移除声明成功");
         }

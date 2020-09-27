@@ -1,7 +1,4 @@
-﻿using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace WQLIdentity.Application.Dtos.ApiResources
 {

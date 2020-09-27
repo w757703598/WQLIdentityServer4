@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WQLIdentity.Application.Interfaces
+﻿namespace WQLIdentity.Application.Interfaces
 {
     public interface IUserManagerService
     {

@@ -1,14 +1,10 @@
-﻿
-using IdentityModel;
-using IdentityServer4.Extensions;
+﻿using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WQLIdentity.Infra.Data.Entities;
@@ -28,7 +24,7 @@ namespace WQLIdentityServerAPI.IdentityServers
         /// The claims factory.
         /// </summary>
         protected readonly IUserClaimsPrincipalFactory<TUser> ClaimsFactory;
-        
+
         /// <summary>
         /// The logger
         /// </summary>
@@ -104,7 +100,7 @@ namespace WQLIdentityServerAPI.IdentityServers
                 new Claim("picture",user.Picture??"")
             };
 
- 
+
             //var role = await UserManager.GetRolesAsync(user);
             //role.ToList().ForEach(f =>
             //{

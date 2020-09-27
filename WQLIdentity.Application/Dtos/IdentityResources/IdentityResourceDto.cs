@@ -1,8 +1,5 @@
-﻿using IdentityServer4.EntityFramework.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace WQLIdentity.Application.Dtos.IdentityResources
 {

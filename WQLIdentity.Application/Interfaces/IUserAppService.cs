@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos;
 using WQLIdentity.Application.Dtos.UserManager;
 using WQLIdentityServer.Infra.Dto;
-using System.Linq;
-using WQLIdentity.Application.Dtos.Roles;
 
 namespace WQLIdentity.Application.Interfaces
 {

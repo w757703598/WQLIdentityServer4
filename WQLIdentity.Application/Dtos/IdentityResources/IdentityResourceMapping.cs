@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace WQLIdentity.Application.Dtos.IdentityResources
 {
-    public class IdentityResourceMapping:Profile
+    public class IdentityResourceMapping : Profile
     {
         public IdentityResourceMapping()
         {

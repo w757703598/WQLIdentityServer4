@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace WQLIdentity.Application.Dtos.ApiResources
 {
-    public class ApiResourceMapping:Profile
+    public class ApiResourceMapping : Profile
     {
         public ApiResourceMapping()
         {
-            CreateMap<CreateApiResouce, ApiResource>().ForMember(x=>x.UserClaims,opt=>opt.MapFrom(src=>src.UserClaims.Select(x=>new ApiResourceClaim { Type=x})));
+            CreateMap<CreateApiResouce, ApiResource>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
             CreateMap<UpdateApiResource, ApiResource>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
             //CreateMap<ApiResource, CreateApiResouce>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(c=>c.Type) ));
 

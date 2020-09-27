@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WQLIdentity.Infra.Data.Entities
 {
-    public class ApplicationUser:IdentityUser<int>
+    public class ApplicationUser : IdentityUser<int>
     {
 
         public ApplicationUser()

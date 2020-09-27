@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos;
 using WQLIdentity.Application.Dtos.Roles;
 using WQLIdentity.Application.Interfaces;
-using WQLIdentity.Domain.Entities;
 using WQLIdentityServer.Infra.Dto;
-using WQLIdentityServerAPI.Configurations.Consts;
 
 namespace WQLIdentityServerAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles ="Administrator", AuthenticationSchemes = "Bearer")]
+    [Authorize(Roles = "Administrator", AuthenticationSchemes = "Bearer")]
     public class RoleAppController : BaseApiController
     {
         private IRoleAppService _roleAppService;
@@ -40,7 +34,7 @@ namespace WQLIdentityServerAPI.Controllers
 
             var result = _roleAppService.GetRoles(input);
             return result;
-          
+
         }
         /// <summary>
         /// 创建角色

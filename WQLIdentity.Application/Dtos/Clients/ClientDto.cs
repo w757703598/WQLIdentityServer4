@@ -1,7 +1,5 @@
-﻿using IdentityServer4.EntityFramework.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace WQLIdentity.Application.Dtos.Clients
 {
@@ -208,7 +206,7 @@ namespace WQLIdentity.Application.Dtos.Clients
         public DateTime? LastAccessed { get; set; }
 
         public int Id { get; set; }
-    
+
         /// <summary>
         /// 协议类型
         /// </summary>

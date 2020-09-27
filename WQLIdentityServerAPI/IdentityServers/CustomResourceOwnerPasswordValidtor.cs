@@ -1,14 +1,13 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4.Events;
+using IdentityServer4.Models;
+using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using IdentityServer4.Services;
-using IdentityServer4.Events;
-
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using WQLIdentity.Infra.Data.Entities;
 using WQLIdentityServerAPI.Models.Identity;
 using static IdentityModel.OidcConstants;
@@ -71,19 +70,19 @@ namespace WQLIdentityServerAPI.IdentityServers
                     await _events.RaiseAsync(new UserLoginSuccessEvent(context.UserName, sub, context.UserName, interactive: false));
 
                     var claims = new List<Claim>();
-                    var userRoles =await _userManager.GetRolesAsync(user);
+                    var userRoles = await _userManager.GetRolesAsync(user);
                     foreach (var roleid in userRoles)
                     {
                         var roles = await _roleManager.FindByNameAsync(roleid);
                         if (roles != null)
                         {
-                            var roleClaim =await _roleManager.GetClaimsAsync(roles);
+                            var roleClaim = await _roleManager.GetClaimsAsync(roles);
                             claims.AddRange(roleClaim.ToList().FindAll(c => c.Type == AuthorizeClaims.ProductFault || c.Type == AuthorizeClaims.Simulation || c.Type == AuthorizeClaims.PartDesin || c.Type == AuthorizeClaims.Config));
                         }
 
                     }
                     //添加用户声明.
-                    var userClaims =await _userManager.GetClaimsAsync(user);
+                    var userClaims = await _userManager.GetClaimsAsync(user);
                     claims.AddRange(userClaims.ToList().FindAll(c => c.Type == AuthorizeClaims.ProductFault || c.Type == AuthorizeClaims.Simulation || c.Type == AuthorizeClaims.PartDesin || c.Type == AuthorizeClaims.Config));
 
                     var data = new Dictionary<string, object>();

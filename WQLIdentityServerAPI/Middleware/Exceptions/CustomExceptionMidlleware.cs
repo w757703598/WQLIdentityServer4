@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -26,7 +24,7 @@ namespace WQLIdentityServerAPI.Middleware.Exceptions
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                await HandleExceptionAsync(context,ex);
+                await HandleExceptionAsync(context, ex);
             }
         }
         private Task HandleExceptionAsync(HttpContext context, Exception exception)

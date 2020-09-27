@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.ApiResources;
 using WQLIdentity.Application.Interfaces;
@@ -11,12 +8,12 @@ using WQLIdentity.Domain.Interface;
 
 namespace WQLIdentity.Application.Services
 {
-    public class ApiScopeService: IApiScopeService
+    public class ApiScopeService : IApiScopeService
     {
 
         private IConfigurationRepository<ApiScope> _apiscopeRepository;
         private IMapper _mapper;
-        public ApiScopeService(IConfigurationRepository<ApiScope> apiscopeRepository,  IMapper mapper)
+        public ApiScopeService(IConfigurationRepository<ApiScope> apiscopeRepository, IMapper mapper)
         {
 
             _apiscopeRepository = apiscopeRepository;
@@ -25,7 +22,7 @@ namespace WQLIdentity.Application.Services
 
         public async Task<bool> AddApiScope(ApiScopeDto apiScope)
         {
-            var scope =await _apiscopeRepository.GetAll().Include(s => s.Properties).Include(i => i.UserClaims).FirstOrDefaultAsync(d => d.Name == apiScope.Name);
+            var scope = await _apiscopeRepository.GetAll().Include(s => s.Properties).Include(i => i.UserClaims).FirstOrDefaultAsync(d => d.Name == apiScope.Name);
             if (scope != null)
             {
                 return false;

@@ -1,8 +1,5 @@
 ﻿using IdentityServer4.Models;
 using IdentityServer4.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentityServerAPI.IdentityServers.Services;
@@ -17,7 +14,7 @@ namespace WQLIdentityServerAPI.IdentityServers
         public string GrantType => "sms";
         private readonly IAuthCodeService _authCodeService;
         private readonly IUserAppService _userAppService;
-        public SmsAuthCodeValidator(IAuthCodeService authCodeService,IUserAppService userAppService)
+        public SmsAuthCodeValidator(IAuthCodeService authCodeService, IUserAppService userAppService)
         {
             _authCodeService = authCodeService;
             _userAppService = userAppService;
@@ -27,7 +24,7 @@ namespace WQLIdentityServerAPI.IdentityServers
         {
             var phone = context.Request.Raw["phone"];
             var code = context.Request.Raw["auth_code"];
-            var errResult= new GrantValidationResult(TokenRequestErrors.InvalidGrant);
+            var errResult = new GrantValidationResult(TokenRequestErrors.InvalidGrant);
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(code))
             {
                 context.Result = errResult;

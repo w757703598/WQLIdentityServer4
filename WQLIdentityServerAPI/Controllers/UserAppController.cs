@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos;
 using WQLIdentity.Application.Dtos.UserManager;
 using WQLIdentity.Application.Interfaces;
@@ -127,7 +124,7 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Policy = PolicyConst.Manager , AuthenticationSchemes = "Bearer")]
+        [Authorize(Policy = PolicyConst.Manager, AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddToRole([FromBody]UserRoleDto dto)
         {
             if (!ModelState.IsValid)
@@ -183,7 +180,7 @@ namespace WQLIdentityServerAPI.Controllers
                 return BadRequest(ModelStateErrors);
             }
             var result = await _userAppService.CreateUserClaim(model);
-            return IdentityResponse(result,"添加用户声明成功");
+            return IdentityResponse(result, "添加用户声明成功");
 
         }
         /// <summary>
@@ -200,7 +197,7 @@ namespace WQLIdentityServerAPI.Controllers
                 return BadRequest(ModelStateErrors);
             }
             var result = await _userAppService.RemoveUserClaim(model);
-            return IdentityResponse(result,"移除用户声明成功");
+            return IdentityResponse(result, "移除用户声明成功");
         }
         /// <summary>
         /// 获取用户声明

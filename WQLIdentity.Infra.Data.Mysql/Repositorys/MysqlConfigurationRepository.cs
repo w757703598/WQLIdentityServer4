@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WQLIdentity.Domain.Interface;
+﻿using WQLIdentity.Domain.Interface;
 using WQLIdentity.Infra.Data.Repository;
 
 namespace WQLIdentity.Infra.Data.Mysql.Repositorys

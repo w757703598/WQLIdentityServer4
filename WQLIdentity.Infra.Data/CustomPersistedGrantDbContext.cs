@@ -1,11 +1,7 @@
 ﻿using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace WQLIdentity.Infra.Data
 {
@@ -13,7 +9,7 @@ namespace WQLIdentity.Infra.Data
     {
         public CustomPersistedGrantDbContext(DbContextOptions<CustomPersistedGrantDbContext> options, OperationalStoreOptions storeOptions) : base(options, storeOptions)
         {
-            
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

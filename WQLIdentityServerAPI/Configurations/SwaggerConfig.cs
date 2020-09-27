@@ -1,20 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using WQLIdentity.Application.Interfaces;
 
 namespace WQLIdentityServerAPI.Configurations
 {
     public static class SwaggerConfig
     {
-        public  static void ConfigureSwagger(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureSwagger(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSwaggerGen(c =>
             {

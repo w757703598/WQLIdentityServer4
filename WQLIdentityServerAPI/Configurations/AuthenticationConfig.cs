@@ -1,17 +1,9 @@
-﻿using IdentityServer4;
-using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WQLIdentityServerAPI.Configurations
 {
@@ -21,12 +13,12 @@ namespace WQLIdentityServerAPI.Configurations
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-       
+
 
             services.AddAuthentication()
              .AddJwtBearer("Bearer", options =>
             {
-                
+
                 var configUrl = configuration["authUrls"];
                 options.Authority = configUrl;
                 options.RequireHttpsMetadata = true;

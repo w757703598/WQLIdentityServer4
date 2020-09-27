@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Autofac;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Autofac;
-using IdentityServer4.EntityFramework.Interfaces;
-using Microsoft.Extensions.Configuration;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Application.Services;
 using WQLIdentity.Domain.Interface;
-using WQLIdentity.Infra.Data;
 using WQLIdentity.Infra.Data.Mysql.Repositorys;
 using WQLIdentity.Infra.Data.Repository;
 using WQLIdentityServerAPI.Configurations.Consts;
@@ -20,7 +15,7 @@ namespace WQLIdentityServerAPI.Configurations
     internal class AutofacModule : Autofac.Module
     {
         private IConfiguration _configuration;
-        internal AutofacModule( IConfiguration configuration)
+        internal AutofacModule(IConfiguration configuration)
         {
             _configuration = configuration;
         }

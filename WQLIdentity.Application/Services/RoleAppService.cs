@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos;
 using WQLIdentity.Application.Dtos.Roles;
@@ -35,14 +34,14 @@ namespace WQLIdentity.Application.Services
 
         public Pagelist<RoleListDto> GetRoles(PageInputDto input)
         {
-            var roles= _roleManager.Roles.PageBy(input, r => r.Id);
+            var roles = _roleManager.Roles.PageBy(input, r => r.Id);
             var result = _mapper.Map<Pagelist<RoleListDto>>(roles);
             return result;
         }
 
         public async Task<IdentityResult> UpdateRoleAsync(UpdateRoleDto roleDto)
         {
-            var role =await _roleManager.FindByIdAsync(roleDto.Id);
+            var role = await _roleManager.FindByIdAsync(roleDto.Id);
             role.Name = roleDto.Name;
             var result = await _roleManager.UpdateAsync(role);
             return result;
@@ -83,7 +82,7 @@ namespace WQLIdentity.Application.Services
             var role = await _roleManager.FindByIdAsync(roleId);
             var claim = await _roleManager.GetClaimsAsync(role);
             return _mapper.Map<List<ClaimViewDto>>(claim);
-    
+
         }
     }
 }

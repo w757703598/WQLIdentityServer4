@@ -1,23 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using AntennaKnowledgeBase.Api.Middleware;
+﻿using AntennaKnowledgeBase.Api.Middleware;
 using Autofac;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
-using WQLIdentity.Application.Interfaces;
 
 using WQLIdentityServerAPI.Configurations;
 using WQLIdentityServerAPI.Middleware.Exceptions;
@@ -120,14 +107,15 @@ namespace WQLIdentityServerAPI
             });
 
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
 
-            
+
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -136,7 +124,7 @@ namespace WQLIdentityServerAPI
             builder.RegisterModule(new AutofacModule(Configuration));
         }
 
-        
+
 
     }
 }

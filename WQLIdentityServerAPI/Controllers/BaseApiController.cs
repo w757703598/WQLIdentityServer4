@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,10 +39,10 @@ namespace WQLIdentityServerAPI.Controllers
             }
             else
             {
-                return BadRequest(new ErrorContent() { Message="操作失败",StatusCode=400});
+                return BadRequest(new ErrorContent() { Message = "操作失败", StatusCode = 400 });
             }
         }
-  
+
 
     }
 }

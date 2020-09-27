@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.ApiResources;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Domain.Interface;
@@ -30,15 +28,15 @@ namespace WQLIdentity.Application.Services
             _apisecretRepository = apisecretRepository;
             _mapper = mapper;
         }
-        public  Pagelist<ApiResourceListDto> GetApiResources(PageInputDto pageInput)
+        public Pagelist<ApiResourceListDto> GetApiResources(PageInputDto pageInput)
         {
-            var resources=  _apiresourceRepository.GetAll().PageBy(pageInput,p=>p.Id);
+            var resources = _apiresourceRepository.GetAll().PageBy(pageInput, p => p.Id);
             return _mapper.Map<Pagelist<ApiResourceListDto>>(resources);
         }
 
         public async Task<ApiResourceDto> GetApiResource(int Id)
         {
-            var resource =await _apiresourceRepository.GetAll().Include(a=>a.UserClaims).AsNoTracking().FirstOrDefaultAsync(d=>d.Id==Id);
+            var resource = await _apiresourceRepository.GetAll().Include(a => a.UserClaims).AsNoTracking().FirstOrDefaultAsync(d => d.Id == Id);
 
             return _mapper.Map<ApiResourceDto>(resource);
         }
@@ -52,7 +50,7 @@ namespace WQLIdentity.Application.Services
             return await _apiresourceRepository.SaveChangesAsync() > 0;
         }
 
-   
+
 
         public async Task<bool> CreateApiResource(CreateApiResouce model)
         {
@@ -63,30 +61,30 @@ namespace WQLIdentity.Application.Services
 
         public async Task<bool> Update(UpdateApiResource model)
         {
-            var entity =await _apiresourceRepository.GetAll().Include(c=>c.UserClaims).FirstOrDefaultAsync(d=>d.Id==model.Id);
-            var apiresource = _mapper.Map<UpdateApiResource,ApiResource>(model, entity);
+            var entity = await _apiresourceRepository.GetAll().Include(c => c.UserClaims).FirstOrDefaultAsync(d => d.Id == model.Id);
+            var apiresource = _mapper.Map<UpdateApiResource, ApiResource>(model, entity);
             _apiresourceRepository.Update(apiresource);
             return await _apiresourceRepository.SaveChangesAsync() > 0;
         }
 
-        public  Pagelist<ApiScopeDto> GetScopes(PageInputDto pageInput, int apiresourceId)
+        public Pagelist<ApiScopeDto> GetScopes(PageInputDto pageInput, int apiresourceId)
         {
 
-            var scopes = _apiresourceRepository.GetAll().Where(d => d.Id == apiresourceId).Include(d=>d.Scopes).SelectMany(d=>d.Scopes).PageBy(pageInput,d=>d.Id);
+            var scopes = _apiresourceRepository.GetAll().Where(d => d.Id == apiresourceId).Include(d => d.Scopes).SelectMany(d => d.Scopes).PageBy(pageInput, d => d.Id);
             return _mapper.Map<Pagelist<ApiScopeDto>>(scopes);
         }
 
 
         public async Task<bool> AddScope(ApiScopeResourceDto apiScope)
         {
-            var apiresource =await _apiresourceRepository.GetByIdAsync(apiScope.ResourceId);
+            var apiresource = await _apiresourceRepository.GetByIdAsync(apiScope.ResourceId);
             if (apiresource == null)
             {
                 throw new Exception("apiResource不存在");
             }
             if (apiresource.Scopes.FirstOrDefault(d => d.Scope == apiScope.ScopeName) != null)
             {
-                throw new Exception("不存在"+apiScope.ScopeName);
+                throw new Exception("不存在" + apiScope.ScopeName);
             }
             apiresource.Scopes.Add(_mapper.Map<ApiResourceScope>(apiScope));
             return await _apiresourceRepository.SaveChangesAsync() > 0;
@@ -124,7 +122,7 @@ namespace WQLIdentity.Application.Services
             }
             _apipropertyRepository.Remove(property);
             return await _apipropertyRepository.SaveChangesAsync() > 0;
-        
+
         }
 
         public async Task<bool> AddProperties(CreateApiPropertiesDto apiProperties)
@@ -132,7 +130,7 @@ namespace WQLIdentity.Application.Services
             var apiresource = await _apiresourceRepository.GetByIdAsync(apiProperties.ApiResourceId);
             var entity = _mapper.Map<ApiResourceProperty>(apiProperties);
             entity.ApiResource = apiresource ?? throw new Exception("apiResource不存在");
-           
+
             await _apipropertyRepository.AddAsync(entity);
             return await _apipropertyRepository.SaveChangesAsync() > 0;
         }

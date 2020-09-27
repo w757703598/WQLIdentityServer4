@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WQLIdentity.Infra.Data.Entities;
 
 namespace WQLIdentity.Application.Dtos.UserManager

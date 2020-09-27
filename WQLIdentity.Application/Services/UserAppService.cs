@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos;
-using WQLIdentity.Application.Dtos.Roles;
 using WQLIdentity.Application.Dtos.UserManager;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Infra.Data.Entities;
@@ -29,7 +27,7 @@ namespace WQLIdentity.Application.Services
 
         public Pagelist<UserListDto> GetUsers(PageInputDto input)
         {
-            var pageresult= _userManager.Users.PageBy(input, d => d.Id);
+            var pageresult = _userManager.Users.PageBy(input, d => d.Id);
             var result = _mapper.Map<Pagelist<UserListDto>>(pageresult);
             return result;
         }
@@ -58,7 +56,7 @@ namespace WQLIdentity.Application.Services
         public async Task<IdentityResult> UpdateAsync(UpdateUserDto userDto)
         {
             var user = await _userManager.FindByIdAsync(userDto.Id);
-            var updateUser= _mapper.Map(userDto, user);
+            var updateUser = _mapper.Map(userDto, user);
             var result = await _userManager.UpdateAsync(updateUser);
             return result;
         }
@@ -73,14 +71,14 @@ namespace WQLIdentity.Application.Services
         public async Task<IEnumerable<string>> GetUserRolesAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
-            var roles =await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
             return roles;
         }
 
         public async Task<IdentityResult> AddToRoleAsync(UserRoleDto dto)
         {
             var user = await _userManager.FindByIdAsync(dto.UserId);
-            var result =await _userManager.AddToRoleAsync(user, dto.RoleName);
+            var result = await _userManager.AddToRoleAsync(user, dto.RoleName);
             return result;
         }
 
@@ -124,23 +122,23 @@ namespace WQLIdentity.Application.Services
 
         public async Task<int> CheckOrCreate(string phone)
         {
-            var user =await _userManager.Users.SingleOrDefaultAsync(d => d.PhoneNumber == phone);
+            var user = await _userManager.Users.SingleOrDefaultAsync(d => d.PhoneNumber == phone);
             if (user == null)
             {
                 user = new ApplicationUser()
                 {
-                    UserName=phone,
+                    UserName = phone,
                     PhoneNumber = phone
                 };
-                var result= await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user);
 
             }
             return user.Id;
         }
-        public async  Task<bool> CheckUserByPhone(string phone)
+        public async Task<bool> CheckUserByPhone(string phone)
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(d => d.PhoneNumber == phone);
-            return user==null;
+            return user == null;
         }
     }
 }

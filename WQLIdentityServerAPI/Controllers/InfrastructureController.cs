@@ -1,14 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Domain.Entities;
 using WQLIdentityServer.Infra.Dto;
 using WQLIdentityServer.Infra.Helpers;
-using WQLIdentityServerAPI.Models;
 
 namespace WQLIdentityServerAPI.Controllers
 {
@@ -39,7 +35,7 @@ namespace WQLIdentityServerAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SelectItemDto>> GetProtocolTypes()
         {
-            return new List<SelectItemDto> { new SelectItemDto("oidc", "OpenID Connect" )};
+            return new List<SelectItemDto> { new SelectItemDto("oidc", "OpenID Connect") };
         }
         /// <summary>
         /// 获取声明信息用于下拉框使用

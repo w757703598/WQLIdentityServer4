@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using WQLIdentity.Application.Dtos.ApiResources;
 
 namespace WQLIdentity.Application.Dtos.Clients
 {
-    public class ClientMapping:Profile
+    public class ClientMapping : Profile
     {
         public ClientMapping()
         {

@@ -1,8 +1,4 @@
-﻿using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using WQLIdentityServer.Infra.Dto;
 
 namespace WQLIdentity.Application.Dtos.Clients

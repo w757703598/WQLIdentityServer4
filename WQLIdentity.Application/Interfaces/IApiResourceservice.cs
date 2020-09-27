@@ -1,7 +1,4 @@
 ﻿using IdentityServer4.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.ApiResources;
 using WQLIdentityServer.Infra.Dto;
@@ -17,7 +14,7 @@ namespace WQLIdentity.Application.Interfaces
         Task<bool> Remove(int Id);
 
         Pagelist<ApiScopeDto> GetScopes(PageInputDto pageInput, int apiresourceId);
-     
+
         Task<bool> AddScope(ApiScopeResourceDto apiScope);
         Task<bool> RemoveScope(ApiScopeResourceDto apiScope);
 

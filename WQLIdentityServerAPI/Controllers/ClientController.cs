@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WQLIdentity.Application.Dtos.Clients;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentityServer.Infra.Dto;
@@ -35,14 +31,14 @@ namespace WQLIdentityServerAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Pagelist< ClientListDto>> GetClients([FromQuery]PageInputDto pageInput)
+        public ActionResult<Pagelist<ClientListDto>> GetClients([FromQuery]PageInputDto pageInput)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelStateErrors);
             }
             var result = _clientAppService.GetClients(pageInput);
-            return Ok( result);
+            return Ok(result);
 
 
         }
@@ -67,7 +63,7 @@ namespace WQLIdentityServerAPI.Controllers
                 return BadRequest(ModelStateErrors);
             }
             var result = await _clientAppService.UpdateClient(client);
-            return ResultResponse(result,"修改客户端成功");
+            return ResultResponse(result, "修改客户端成功");
         }
         [HttpPost]
         public async Task<IActionResult> RemoveClient([FromBody]int clientId)
@@ -80,7 +76,7 @@ namespace WQLIdentityServerAPI.Controllers
             var result = await _clientAppService.RemoveClient(clientId);
             return ResultResponse(result, "移除客户端成功");
         }
-         
+
         [HttpGet]
         public ActionResult<Pagelist<ClientSecretDto>> GetApiSecrets([FromQuery]PageInputDto pageInput, int clientId)
         {

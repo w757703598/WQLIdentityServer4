@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WQLIdentityServerAPI.SeedData;
-using Autofac.Extensions.DependencyInjection;
 using NLog.Web;
+using System;
+using System.Linq;
+using WQLIdentityServerAPI.SeedData;
 
 namespace WQLIdentityServerAPI
 {
     public class Program
     {
-        public static  void Main(string[] args)
+        public static void Main(string[] args)
         {
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             Console.Title = "IdentityServer";
@@ -36,7 +32,7 @@ namespace WQLIdentityServerAPI
                 //seedData.EnsureSeedDataAsync(host.Services).Wait();
                 if (seed)
                 {
-                    
+
                     seedData.EnsureSeedDataAsync(host.Services).Wait();
                 }
                 host.Run();
@@ -60,7 +56,7 @@ namespace WQLIdentityServerAPI
             var config = new ConfigurationBuilder().AddJsonFile("host.json", optional: true).Build();//发布地址配置文件
             return WebHost.CreateDefaultBuilder(args)
                     .UseStartup<Startup>()
-                    .ConfigureLogging(opt=>opt.AddDebug())
+                    .ConfigureLogging(opt => opt.AddDebug())
                     .ConfigureServices(service => service.AddAutofac())
                     .UseConfiguration(config)
                     .UseNLog()

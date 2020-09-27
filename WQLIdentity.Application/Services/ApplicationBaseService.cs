@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Domain.Entities;
@@ -12,9 +9,9 @@ using WQLIdentityServer.Infra.Extensions;
 
 namespace WQLIdentity.Application.Services
 {
-    public class ApplicationBaseService<TEntity>:IApplicationBaseService<TEntity> where TEntity: Entity
+    public class ApplicationBaseService<TEntity> : IApplicationBaseService<TEntity> where TEntity : Entity
     {
-        protected readonly IApplicationRepository<TEntity>  _repository;
+        protected readonly IApplicationRepository<TEntity> _repository;
         private IMapper _mapper;
         public ApplicationBaseService(IApplicationRepository<TEntity> repository, IMapper mapper)
         {
@@ -77,6 +74,6 @@ namespace WQLIdentity.Application.Services
             return await _repository.SaveChangesAsync();
         }
 
-  
+
     }
 }
