@@ -118,7 +118,7 @@ namespace WQLIdentityServerAPI.Configurations
             })
             .AddAspNetIdentity<ApplicationUser>()
             .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidtor<ApplicationUser, ApplicationRole>>()
-                .AddExtensionGrantValidator<SmsAuthCodeValidator>()   //短信扩展验证
+            .AddExtensionGrantValidator<SmsAuthCodeValidator>()   //短信扩展验证
             .AddProfileService<CustomProfileService<ApplicationUser>>();
 
 

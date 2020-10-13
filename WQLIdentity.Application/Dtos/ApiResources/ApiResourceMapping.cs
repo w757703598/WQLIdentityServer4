@@ -8,23 +8,25 @@ namespace WQLIdentity.Application.Dtos.ApiResources
     {
         public ApiResourceMapping()
         {
-            CreateMap<CreateApiResouce, ApiResource>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
-            CreateMap<UpdateApiResource, ApiResource>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
+            CreateMap<CreateApiResouce, ApiResource>(MemberList.Source).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
+
+            CreateMap<UpdateApiResource, ApiResource>(MemberList.Source).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiResourceClaim { Type = x })));
             //CreateMap<ApiResource, CreateApiResouce>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(c=>c.Type) ));
 
-            CreateMap<ApiResource, ApiResourceDto>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(c => c.Type)));
+            CreateMap<ApiResource, ApiResourceDto>(MemberList.Destination).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(c => c.Type)));
 
-
+            CreateMap<ApiResource, ApiResourceListDto>(MemberList.Destination);
 
             //apiscope
-            CreateMap<ApiScope, ApiScopeDto>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(c => c.Type)));
-            CreateMap<CreateApiScopeDto, ApiScope>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
-            CreateMap<UpdateScopeDto, ApiScope>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
+            CreateMap<ApiScope, ApiScopeDto>(MemberList.None).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(c => c.Type)));
+            CreateMap<CreateApiScopeDto, ApiScope>(MemberList.None).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
+            CreateMap<UpdateScopeDto, ApiScope>(MemberList.None).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new ApiScopeClaim { Type = x })));
+
 
 
             //apiscret
-            CreateMap<CreateApiSecretDto, ApiResourceSecret>();
-            CreateMap<CreateApiPropertiesDto, ApiResourceProperty>();
+            CreateMap<CreateApiSecretDto, ApiResourceSecret>(MemberList.None);
+            CreateMap<CreateApiPropertiesDto, ApiResourceProperty>(MemberList.None);
         }
     }
 }

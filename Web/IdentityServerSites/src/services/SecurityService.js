@@ -5,7 +5,7 @@ import { Message } from 'element-ui'
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
   //authority: 'http://10.53.20.175:8005',
-  authority: 'https://10.53.20.226:5011',
+  authority: 'http://10.53.20.226:5010',
   //authority: 'http://wangqianlong.qicp.vip:5001/',
 
   client_id: 'vuejsclient',

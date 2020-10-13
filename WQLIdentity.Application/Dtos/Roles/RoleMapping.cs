@@ -8,7 +8,8 @@ namespace WQLIdentity.Application.Dtos.Roles
         public RoleMapping()
         {
             CreateMap<CreateRoleDto, ApplicationRole>(MemberList.None);
-            CreateMap<UpdateRoleDto, ApplicationUser>(MemberList.None);
+            CreateMap<UpdateRoleDto, ApplicationRole>(MemberList.None);
+            CreateMap<ApplicationRole, RoleListDto>(MemberList.None);
 
         }
     }

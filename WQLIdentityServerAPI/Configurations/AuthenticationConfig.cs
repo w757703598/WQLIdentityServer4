@@ -21,7 +21,7 @@ namespace WQLIdentityServerAPI.Configurations
 
                 var configUrl = configuration["authUrls"];
                 options.Authority = configUrl;
-                options.RequireHttpsMetadata = true;
+                options.RequireHttpsMetadata = false;
                 //options.Audience = "IdentityServer";
 
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters

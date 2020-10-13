@@ -8286,6 +8286,11 @@ vue@^2.6.10:
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.10.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
 
+vuex-oidc@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.npm.taobao.org/vuex-oidc/download/vuex-oidc-3.10.0.tgz#f072cd112b8c20bed2bdf9374f79632b30f27c54"
+  integrity sha1-8HLNESuMIL7Svfk3T3ljKzDyfFQ=
+
 vuex@^3.0.1:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/vuex/download/vuex-3.1.0.tgz#634b81515cf0cfe976bd1ffe9601755e51f843b9"

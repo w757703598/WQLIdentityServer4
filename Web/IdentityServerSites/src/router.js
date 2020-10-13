@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Mgr from './services/SecurityService'
+import { vuexOidcCreateRouterMiddleware } from 'vuex-oidc'
 import uilts from './services/uilts'
-Vue.use(Router)
+import store from './store'
 
-let mgr = new Mgr()
+Vue.use(Router)
 
 let router = new Router({
   mode: 'history',
@@ -19,16 +19,37 @@ let router = new Router({
     },
     {
       path: '/oidc-callback',
-      name: 'oidc-callback',
-      component: () => import('./views/Callback.vue'),
+      name: 'OidcCallback',
+      component: () => import('./views/oidcs/Callback.vue'),
       meta: {
         requireAuth: false,
       },
     },
-
     {
       meta: {
-        requireAuth: false,
+        requireAuth: true,
+      },
+      path: '/protected',
+      name: 'protected',
+      component: () => import('./views/oidcs/Protected.vue'),
+    },
+
+    {
+      path: '/oidc-popup-callback', // Needs to match popupRedirectUri in you oidcSettings
+      name: 'oidcPopupCallback',
+      component: () => import('./views/oidcs/OidcPopupCallback.vue'),
+    },
+    {
+      path: '/oidc-callback-error', // Needs to match redirect_uri in you oidcSettings
+      name: 'oidcCallbackError',
+      component: () => import('./views/oidcs/OidcCallbackError.vue'),
+      meta: {
+        isPublic: true,
+      },
+    },
+    {
+      meta: {
+        requireAuth: true,
       },
       path: '/',
       name: 'home',
@@ -215,63 +236,38 @@ let router = new Router({
     },
   ],
 })
+router.beforeEach(vuexOidcCreateRouterMiddleware(store))
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {
-    mgr.getSignedIn(to.path).then((res) => {
-      console.log('authenticating a protected url:' + to.path)
-      if (res) {
-        if (to.meta.role) {
-          mgr.getRole().then((sucess) => {
-            console.info(uilts.CheckPermiss(to.meta.role, sucess))
-            if (uilts.CheckPermiss(to.meta.role, sucess)) {
-              next()
-            } else {
-              next('/accessdenied')
-            }
-          })
-        } else {
-          next()
-        }
-      }
-    })
-  } else {
-    next()
-  }
-
-  // var isAuthenticated = store.getters.isAuthenticated;
-
-  // if (isAuthenticated) {
-
-  //   if (to.meta.role) {
-  //     mgr.getRole().then(
-  //       sucess => {
-  //         console.info(uilts.CheckPermiss(to.meta.role, sucess))
-  //         if (uilts.CheckPermiss(to.meta.role, sucess)) {
-  //           next();
-  //         } else {
-
-  //           next('/accessdenied');
-  //         }
-  //       }
-  //     )
-  //   } else {
-  //     next()
-  //   }
-  // } else {
-  //   if (to.meta.requireAuth) {
-
-  //     mgr.getSignedIn(to.path).then((res) => {
-  //       console.log('authenticating a protected url:' + to.path);
-  //       if (res) {
-  //         next(to.path);
-  //       }
-  //     });
-  //   } else {
-  //     next()
-  //   }
-
-  // }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requireAuth) {
+//     console.info(store)
+//     console.info(store.dispatch('getOidcUser'))
+//     store.dispatch('getOidcUser').then((user) => {
+//       console.info(user)
+//       if (user == null) {
+//         console.info('用户为空登陆', to.path)
+//         store.dispatch('oidcSignInCallback', to.path)
+//       } else {
+//         if (to.meta.role) {
+//           console.info('判断角色')
+//           console.info(user)
+//           next()
+//           // console.info(user.profile.role)
+//           // if (uilts.CheckPermiss(to.meta.role, user.profile.role)) {
+//           //   next()
+//           // } else {
+//           //   next('/accessdenied')
+//           // }
+//         } else {
+//           console.info('不需要判断角色')
+//           next()
+//         }
+//       }
+//     })
+//   } else {
+//     console.info('不需要授权')
+//     next()
+//   }
+// })
 
 export default router

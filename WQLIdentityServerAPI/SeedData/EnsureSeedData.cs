@@ -1,5 +1,6 @@
 ﻿
 using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -74,7 +75,7 @@ namespace WQLIdentityServerAPI.SeedData
             //{
 
             var databaseType = services.GetService<IConfiguration>().GetSection("Settings")["DatabaseType"];
-            ConfigurationDbContext configurationDbContext = null;
+            IConfigurationDbContext configurationDbContext = null;
             if (databaseType.ToLower() == DatabaseConst.Mysql)
             {
                 services.GetRequiredService<MysqlPersistedGrantDbContext>().Database.Migrate();
@@ -92,7 +93,7 @@ namespace WQLIdentityServerAPI.SeedData
                 {
                     await configurationDbContext.Clients.AddAsync(client.ToEntity());
                 }
-                await configurationDbContext.SaveChangesAsync();
+                await ((DbContext)configurationDbContext).SaveChangesAsync();
             }
 
             if (!configurationDbContext.ApiResources.Any())
@@ -101,7 +102,7 @@ namespace WQLIdentityServerAPI.SeedData
                 {
                     await configurationDbContext.ApiResources.AddAsync(api.ToEntity());
                 }
-                await configurationDbContext.SaveChangesAsync();
+                await ((DbContext)configurationDbContext).SaveChangesAsync();
             }
 
             if (!configurationDbContext.ApiScopes.Any())
@@ -110,7 +111,7 @@ namespace WQLIdentityServerAPI.SeedData
                 {
                     await configurationDbContext.ApiScopes.AddAsync(api.ToEntity());
                 }
-                await configurationDbContext.SaveChangesAsync();
+                await ((DbContext)configurationDbContext).SaveChangesAsync();
             }
 
             if (!configurationDbContext.IdentityResources.Any())
@@ -119,7 +120,7 @@ namespace WQLIdentityServerAPI.SeedData
                 {
                     await configurationDbContext.IdentityResources.AddAsync(identity.ToEntity());
                 }
-                await configurationDbContext.SaveChangesAsync();
+                await ((DbContext)configurationDbContext).SaveChangesAsync();
             }
             //}
             _logger.LogInformation("初始化identityserver信息成功");

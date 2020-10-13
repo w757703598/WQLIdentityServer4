@@ -11,7 +11,7 @@ namespace WQLIdentity.Application.Dtos.IdentityResources
 
 
 
-            CreateMap<CreateIdentityResourceDto, IdentityResource>().ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new IdentityResourceClaim { Type = x })));
+            CreateMap<CreateIdentityResourceDto, IdentityResource>(MemberList.None).ForMember(x => x.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(x => new IdentityResourceClaim { Type = x })));
 
 
             CreateMap<IdentityResource, IdentityResourceDto>(MemberList.Destination)
@@ -19,7 +19,9 @@ namespace WQLIdentity.Application.Dtos.IdentityResources
 
 
 
-            CreateMap<IdentityResourcePropertyDto, IdentityResourceProperty>();
+            CreateMap<IdentityResourcePropertyDto, IdentityResourceProperty>(MemberList.None);
+
+            CreateMap<IdentityResource, IdentityResourceListDto>(MemberList.None);
         }
     }
 }

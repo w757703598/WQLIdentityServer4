@@ -9,7 +9,9 @@ namespace WQLIdentity.Application.Dtos.UserManager
         {
             CreateMap<CreateUserDto, ApplicationUser>(MemberList.None);
             CreateMap<UpdateUserDto, ApplicationUser>(MemberList.None);
+            CreateMap<ApplicationUser, UserListDto>(MemberList.None);
 
+            CreateMap<ApplicationUser, UserDetailDto>(MemberList.None);
         }
     }
 }

@@ -82,10 +82,7 @@ namespace WQLIdentity.Application.Services
             {
                 throw new Exception("apiResource不存在");
             }
-            if (apiresource.Scopes.FirstOrDefault(d => d.Scope == apiScope.ScopeName) != null)
-            {
-                throw new Exception("不存在" + apiScope.ScopeName);
-            }
+       
             apiresource.Scopes.Add(_mapper.Map<ApiResourceScope>(apiScope));
             return await _apiresourceRepository.SaveChangesAsync() > 0;
 
@@ -97,6 +94,10 @@ namespace WQLIdentity.Application.Services
             if (apiResource == null)
             {
                 throw new Exception("apiResource不存在");
+            }
+            if (apiResource.Scopes.FirstOrDefault(d => d.Scope == removeApiScope.ScopeName) != null)
+            {
+                throw new Exception("不存在" + removeApiScope.ScopeName);
             }
             apiResource.Scopes.RemoveAll(d => d.Scope == removeApiScope.ScopeName);
             return await _apiresourceRepository.SaveChangesAsync() > 0;

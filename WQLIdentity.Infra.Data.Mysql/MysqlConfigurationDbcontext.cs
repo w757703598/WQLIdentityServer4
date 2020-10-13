@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WQLIdentity.Infra.Data
 {
-    public class MysqlConfigurationDbContext : ConfigurationDbContext
+    public class MysqlConfigurationDbContext : ConfigurationDbContext<MysqlConfigurationDbContext>
     {
 
 
-        public MysqlConfigurationDbContext(DbContextOptions<ConfigurationDbContext> options, ConfigurationStoreOptions storeOptions) : base(options, storeOptions)
+        public MysqlConfigurationDbContext(DbContextOptions<MysqlConfigurationDbContext> options, ConfigurationStoreOptions storeOptions) : base(options, storeOptions)
         {
 
         }

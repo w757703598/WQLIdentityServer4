@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using WQLIdentityServerAPI.Configurations;
 using WQLIdentityServerAPI.Middleware.Exceptions;
 
@@ -83,7 +82,12 @@ namespace WQLIdentityServerAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+
+            app.UseCookiePolicy();
+
             app.ConfigureExceptionMidlleware(logger);//异常捕获
+
+
 
             app.UseStaticFiles();
 
@@ -95,6 +99,8 @@ namespace WQLIdentityServerAPI
 
 
             app.UseIdentityServer();
+
+
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -56,7 +56,7 @@ namespace WQLIdentityServerAPI
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "IdentityServer" }
+                    AllowedScopes = { "IdentityServer.API" }
                 },
 
                 // resource owner password grant client
@@ -69,7 +69,7 @@ namespace WQLIdentityServerAPI
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "IdentityServer" }
+                    AllowedScopes = { "IdentityServer.API" }
                 },
 
                 // OpenID Connect hybrid flow and client credentials client (MVC)
@@ -91,7 +91,7 @@ namespace WQLIdentityServerAPI
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "IdentityServer"
+                        "IdentityServer.API"
                     },
                     AllowOfflineAccess = true
                 },
@@ -112,7 +112,7 @@ namespace WQLIdentityServerAPI
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "IdentityServer"
+                        "IdentityServer.API"
                     },
                 },
                 //管理前端默认客户端
@@ -130,7 +130,7 @@ namespace WQLIdentityServerAPI
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "IdentityServer"
+                        "IdentityServer.API"
 
                     }
                 }

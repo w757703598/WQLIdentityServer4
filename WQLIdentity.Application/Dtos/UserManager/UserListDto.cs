@@ -1,7 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
+using System.ComponentModel;
+using WQLIdentity.Infra.Data.Entities;
 
 namespace WQLIdentity.Application.Dtos.UserManager
 {
+    [AutoMap(typeof(ApplicationUser))]
     public class UserListDto
     {
         public string Id { get; set; }
