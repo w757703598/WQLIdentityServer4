@@ -2,61 +2,75 @@
   <div class="top">
     <div class="logo">
       <img src="../../assets/imgs/mobo-icon.png" />
-      <span></span>
+      <span />
     </div>
     <div class="open-aside">
-      <i class="el-icon-s-unfold" @click="toggleSideBar" :class="{'is-active':isActive}"></i>
+      <i
+        class="el-icon-s-unfold"
+        :class="{ 'is-active': isActive }"
+        @click="toggleSideBar"
+      />
     </div>
 
     <el-dropdown class="header-user-menu" @command="handleCommand">
       <span>
         <img :src="src" class="user-image" />
-        <i class="user-name">{{username}}</i>
+        <i class="user-name">{{ username }}</i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="userinfo">个人信息</el-dropdown-item>
-        <el-dropdown-item command="logOut">安全退出</el-dropdown-item>
+        <el-dropdown-item command="userinfo">
+          个人信息
+        </el-dropdown-item>
+        <el-dropdown-item command="logOut">
+          安全退出
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
-import Mgr from "../../services/SecurityService";
+import { mapActions, mapGetters } from 'vuex'
+// import Mgr from "../../services/SecurityService";
 export default {
   data() {
     return {
-      mgr: new Mgr(),
       src:
-        "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
-      username: "030704",
-      isActive: false
-    };
+        'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+      username: '030704',
+      isActive: false,
+    }
   },
-
+  computed: {
+    ...mapGetters(['oidcUser']),
+  },
   methods: {
-    ...mapActions(["changeCollapse"]),
+    ...mapActions(['changeCollapse', 'signOutOidc', 'removeOidcUser']),
     handleCommand(command) {
-      if (command == "logOut") {
-        this.logOut();
+      if (command == 'logOut') {
+        this.logOut()
       }
-      if (command == "userinfo") {
-        this.$router.push("/userinfo");
+      if (command == 'userinfo') {
+        this.$router.push('/userinfo')
       }
     },
     logOut() {
-      this.mgr.signOut();
+      this.signOutOidc()
+      console.info('退出')
+      this.removeOidcUser().then(() => {
+        console.info('跳转')
+        this.$router.push('/')
+      })
     },
     toggleSideBar() {
-      this.changeCollapse();
-    }
-  }
-};
+      this.changeCollapse()
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
 .top {
-  background-image: url("../../assets/imgs/back.jpg");
+  background-image: url('../../assets/imgs/back.jpg');
   width: 100%;
   // background-color: #257fed;
   height: 50px;

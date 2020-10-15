@@ -102,7 +102,7 @@ namespace WQLIdentityServerAPI.Controllers
         /// <param name="apiresourceId">资源id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<Pagelist<ApiScopeDto>> GetApiScopes([FromQuery]PageInputDto pageInput, int apiresourceId)
+        public ActionResult<Pagelist<ApiScopeResourceDto>> GetApiScopes([FromQuery]PageInputDto pageInput, int apiresourceId)
         {
             if (!ModelState.IsValid)
             {

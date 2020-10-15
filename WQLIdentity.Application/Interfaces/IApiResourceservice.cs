@@ -13,7 +13,7 @@ namespace WQLIdentity.Application.Interfaces
         Task<bool> Update(UpdateApiResource model);
         Task<bool> Remove(int Id);
 
-        Pagelist<ApiScopeDto> GetScopes(PageInputDto pageInput, int apiresourceId);
+        Pagelist<ApiScopeResourceDto> GetScopes(PageInputDto pageInput, int apiresourceId);
 
         Task<bool> AddScope(ApiScopeResourceDto apiScope);
         Task<bool> RemoveScope(ApiScopeResourceDto apiScope);

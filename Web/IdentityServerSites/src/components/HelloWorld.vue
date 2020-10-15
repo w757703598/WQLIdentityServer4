@@ -1,169 +1,138 @@
 <template>
   <div class="hello">
-    <el-button @click="callApi">callAPi</el-button>
-    <el-button @click="weixin">企业微信</el-button>
-    <el-button @click="getToken">getToken</el-button>
-    <el-button @click="getTokenId">getTokenId</el-button>
-    <el-button @click="getTokenSessionState">getTokenSessionState</el-button>
-    <el-button @click="getAccessToken">getAccessToken</el-button>
-    <el-button @click="getTokenScopes">getTokenScopes</el-button>
-    <el-button @click="getTokenProfile">getTokenProfile</el-button>
-    <el-button @click="getrole">getrole</el-button>
-    <el-button @click="renewToken">renewToken</el-button>
+    <el-button @click="callApi">
+      callAPi
+    </el-button>
+    <el-button @click="weixin">
+      企业微信
+    </el-button>
+    <el-button @click="getUser">
+      getUser
+    </el-button>
+    <el-button @click="getTokenId">
+      getTokenId
+    </el-button>
+
+    <el-button @click="getAccessToken">
+      getAccessToken
+    </el-button>
+    <el-button @click="getTokenScopes">
+      getTokenScopes
+    </el-button>
+    <el-button @click="getTokenProfile">
+      getTokenProfile
+    </el-button>
+    <el-button @click="getrole">
+      getrole
+    </el-button>
+    <el-button @click="renewToken">
+      renewToken
+    </el-button>
     <div class="message">
-      <el-alert type="success" v-if="result">{{message}}</el-alert>
-      <el-alert type="error" v-if="!result">{{message}}</el-alert>
+      <el-alert v-if="result" type="success">
+        {{ message }}
+      </el-alert>
+      <el-alert v-if="!result" type="error">
+        {{ message }}
+      </el-alert>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Mgr from "../services/SecurityService";
+import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   data() {
     return {
-      mgr: new Mgr(),
-      message: "",
-      result: true
-    };
+      message: '',
+      result: true,
+    }
+  },
+
+  computed: {
+    ...mapGetters([
+      'oidcIsAuthenticated',
+      'oidcUser',
+      'oidcAccessToken',
+      'oidcAccessTokenExp',
+      'oidcIdToken',
+      'oidcIdTokenExp',
+      'oidcRefreshToken',
+      'oidcRefreshTokenExp',
+      'oidcAuthenticationIsChecked',
+      'oidcError',
+    ]),
+    hasAccess: function() {
+      return this.oidcIsAuthenticated || this.$route.meta.isPublic
+    },
   },
   mounted() {
-    console.info(this);
+    console.info(this)
   },
   methods: {
+    ...mapActions([]),
+
     async weixin() {
       var axiosInstance = axios.create({
-        timeout: 1000
-      });
+        timeout: 1000,
+      })
       let message = {
-        msgtype: "markdown",
+        msgtype: 'markdown',
         markdown: {
           content:
-            '<font color="warning"># 重要通知</font>，请相关同事注意: \n ><font color="comment">今天下午五点喝咖啡</font> '
-        }
-      };
+            '<font color="warning"># 重要通知</font>，请相关同事注意: \n ><font color="comment">今天下午五点喝咖啡</font> ',
+        },
+      }
 
       let res = await axiosInstance
         .post(
-          "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=5b7cb0c8-68d8-4b06-ba6c-9f9cee87cfdd",
+          'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=5b7cb0c8-68d8-4b06-ba6c-9f9cee87cfdd',
           message,
           {
-            headers: { "Content-Type": "text/plain" }
+            headers: { 'Content-Type': 'text/plain' },
           }
         )
-        .catch(err => {
-          self.logToken(err);
-        });
+        .catch((err) => {
+          self.message = err
+        })
       if (res) {
-        console.info(JSON.stringify(res));
-        this.message = res;
+        console.info(JSON.stringify(res))
+        self.message = res
       }
     },
     async callApi() {
-      let res = await this.$http.get("/api/TestValue/Get");
+      let res = await this.$http.get('/api/TestValue/Get')
       if (res) {
-        console.info(JSON.stringify(res));
-        this.message = res;
+        console.info(JSON.stringify(res))
+        this.message = res
       }
     },
-    getToken() {
-      let self = this;
-      this.mgr.getUser().then(
-        token => {
-          self.logToken(token);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+    getUser() {
+      this.message = this.oidcUser
     },
     getrole() {
-      let self = this;
-      this.mgr.getRole().then(
-        token => {
-          self.logToken(token);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.message = this.oidcUser.role
     },
     getTokenId() {
-      let self = this;
-      this.mgr.getIdToken().then(
-        tokenId => {
-          self.logToken(tokenId);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.message = this.oidcIdToken
     },
-    getTokenSessionState() {
-      let self = this;
-      this.mgr.getSessionState().then(
-        sessionState => {
-          self.logToken(sessionState);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    },
+
     getAccessToken() {
-      let self = this;
-      this.mgr.getAcessToken().then(
-        acessToken => {
-          self.logToken(acessToken);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.message = this.oidcAccessToken
     },
     getTokenScopes() {
-      let self = this;
-      this.mgr.getScopes().then(
-        scopes => {
-          self.logToken(scopes);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.message = this.user.scopes
     },
     getTokenProfile() {
-      let self = this;
-      this.mgr.getProfile().then(
-        tokenProfile => {
-          self.logToken(tokenProfile);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.message = this.oidcUser.profile
     },
     renewToken() {
-      let self = this;
-      this.mgr.renewToken().then(
-        newToken => {
-          self.logToken(newToken);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.authenticateOidcSilent()
     },
-    logApi(msg) {
-      this.message = msg;
-    },
-    logToken(msg) {
-      this.message = msg;
-    }
-  }
-};
+  },
+}
 </script>
 
 <style lang="scss" scoped>

@@ -49,7 +49,7 @@ let router = new Router({
     },
     {
       meta: {
-        requireAuth: true,
+        requireAuth: false,
       },
       path: '/',
       name: 'home',
@@ -237,6 +237,34 @@ let router = new Router({
   ],
 })
 router.beforeEach(vuexOidcCreateRouterMiddleware(store))
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    store.dispatch('getOidcUser').then((user) => {
+      console.info(user)
+      if (user == null) {
+        // console.info('用户为空登陆', to.path)
+        // store.dispatch('authenticateOidc', to.path)
+      } else {
+        if (to.meta.role) {
+          console.info('判断角色')
+
+          if (uilts.CheckPermiss(to.meta.role, user.profile.role)) {
+            next()
+          } else {
+            next('/accessdenied')
+          }
+        } else {
+          console.info('不需要判断角色')
+          next()
+        }
+      }
+    })
+  } else {
+    console.info('不需要授权')
+    next()
+  }
+})
 
 // router.beforeEach((to, from, next) => {
 //   if (to.meta.requireAuth) {

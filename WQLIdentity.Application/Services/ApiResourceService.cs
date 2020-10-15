@@ -67,11 +67,11 @@ namespace WQLIdentity.Application.Services
             return await _apiresourceRepository.SaveChangesAsync() > 0;
         }
 
-        public Pagelist<ApiScopeDto> GetScopes(PageInputDto pageInput, int apiresourceId)
+        public Pagelist<ApiScopeResourceDto> GetScopes(PageInputDto pageInput, int apiresourceId)
         {
 
             var scopes = _apiresourceRepository.GetAll().Where(d => d.Id == apiresourceId).Include(d => d.Scopes).SelectMany(d => d.Scopes).PageBy(pageInput, d => d.Id);
-            return _mapper.Map<Pagelist<ApiScopeDto>>(scopes);
+            return _mapper.Map<Pagelist<ApiScopeResourceDto>>(scopes);
         }
 
 

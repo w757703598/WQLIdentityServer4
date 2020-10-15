@@ -24,9 +24,10 @@ namespace WQLIdentityServerAPI.Configurations
                 options.RequireHttpsMetadata = false;
                 //options.Audience = "IdentityServer";
 
+
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-
+                    SaveSigninToken = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("secret")),
                     ValidateLifetime = true,
                     RoleClaimType = "role",

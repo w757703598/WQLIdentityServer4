@@ -1,17 +1,17 @@
 <template>
   <el-container id="content_box">
     <el-header>
-      <Header></Header>
+      <Header />
     </el-header>
 
     <el-container class="aside_box">
       <el-scrollbar wrap-class="scrollbar-wrapper-y">
         <el-aside width="auto">
-          <Sidebar></Sidebar>
+          <Sidebar />
         </el-aside>
       </el-scrollbar>
       <el-main>
-        <tabview></tabview>
+        <tabview />
       </el-main>
     </el-container>
   </el-container>
@@ -22,18 +22,18 @@
 <script>
 // @ is an alias to /src
 
-import Header from "../components/Header/index";
-import Sidebar from "../components/Sidebar/index";
-import Tabview from "../components/Tabview/index";
+import Header from '../components/Header/index'
+import Sidebar from '../components/Sidebar/index'
+import Tabview from '../components/Tabview/index'
 
 export default {
-  name: "home",
+  name: 'Home',
   components: {
     Header,
     Sidebar,
-    Tabview
-  }
-};
+    Tabview,
+  },
+}
 </script>
 <style lang="scss" scoped>
 #content_box {
