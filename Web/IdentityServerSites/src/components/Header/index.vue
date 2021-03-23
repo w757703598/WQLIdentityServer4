@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <div class="logo">
-      <img src="../../assets/imgs/mobo-icon.png" />
+      <img src="../../assets/logo.png" width="50" height="30"/>
       <span />
     </div>
     <div class="open-aside">

@@ -240,6 +240,7 @@ router.beforeEach(vuexOidcCreateRouterMiddleware(store))
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
+    console.info(to.meta.requireAuth)
     store.dispatch('getOidcUser').then((user) => {
       console.info(user)
       if (user == null) {

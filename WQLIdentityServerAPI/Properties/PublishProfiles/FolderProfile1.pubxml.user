@@ -6,6 +6,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\studydemo\自开发项目\WQLIdentityServer\WQLIdentityServer\WQLIdentityServerAPI\bin\Debug\netcoreapp2.2\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\WorkSpace\web\Identityserver4\WQLIdentityServerAPI\bin\Release\net5.0\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

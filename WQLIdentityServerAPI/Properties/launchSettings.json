@@ -20,6 +20,7 @@
     "WQLIdentityServerAPI": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:5001/doc",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
