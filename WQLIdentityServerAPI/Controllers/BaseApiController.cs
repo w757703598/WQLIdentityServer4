@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using WQLIdentityServerAPI.Middleware.Exceptions;
+using WQLIdentityServerAPI.Models;
 
 namespace WQLIdentityServerAPI.Controllers
 {
@@ -33,13 +34,20 @@ namespace WQLIdentityServerAPI.Controllers
 
         protected IActionResult ResultResponse(bool result, string msg)
         {
+            var content = new DefaultResponse<string>();
             if (result)
             {
-                return Ok(msg);
+                content.StatusCode = 0;
+                content.Data = msg + "成功";
+                content.Result = true;
+                return Ok(content);
             }
             else
             {
-                return BadRequest(new ErrorContent() { Message = "操作失败", StatusCode = 400 });
+                content.StatusCode = -1;
+                content.Data = msg + "失败";
+                content.Result = false;
+                return BadRequest(content);
             }
         }
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using WQLIdentityServerAPI.Models;
 
 namespace WQLIdentityServerAPI.Middleware.Exceptions
 {
@@ -32,8 +33,9 @@ namespace WQLIdentityServerAPI.Middleware.Exceptions
 
             string result = null;
 
+
             context.Response.ContentType = "application/json;charset=UTF-8";
-            result = new ErrorContent() { Message = exception.Message, StatusCode = (int)HttpStatusCode.BadRequest }.ToString();
+            result = new DefaultResponse<string>() { Data = exception.Message, StatusCode = (int)HttpStatusCode.BadRequest, Result = false }.ToString();
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return context.Response.WriteAsync(result);
         }

@@ -85,7 +85,7 @@ namespace WQLIdentityServerAPI
 
             app.UseCookiePolicy();
 
-            app.ConfigureExceptionMidlleware(logger);//异常捕获
+            app.UseCustomException(logger);//异常捕获
 
 
 
