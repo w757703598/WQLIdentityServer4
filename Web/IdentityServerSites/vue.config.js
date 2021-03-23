@@ -39,10 +39,10 @@ module.exports = {
       // },
 
       '/connect/token': {
-        target: 'http://10.53.20.226:5010/',
+        target: 'http://localhost:5001/',
       },
       '/api': {
-        target: 'http://10.53.20.226:5010/',
+        target: 'http://localhost:5001/',
       },
     },
   },

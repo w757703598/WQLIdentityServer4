@@ -54,7 +54,7 @@ namespace WQLIdentityServerAPI.SeedData
                 var defaultUser = new ApplicationUser
                 {
                     UserName = AuthorizationConsts.AdministrationUser,
-                    Name = "IT测试",
+                    Name = "admin",
                     SecurityStamp = "admin",
                 };
 

@@ -80,11 +80,11 @@ namespace WQLIdentityServerAPI.Configurations
                     //ConfigurationDbContext
                     options.ConfigureDbContext = builder =>
                     {
-                        builder.UseMySql(connectionString,
+                        builder.UseMySql(connectionString,MySqlServerVersion.LatestSupportedServerVersion,
                             sql =>
                             {
                                 sql.MigrationsAssembly(migrationAssembly);
-                                sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql);
+                                //sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql);
                             });
                         //builder.UseMySQL(connectionString, sql =>
                         //{
@@ -101,11 +101,11 @@ namespace WQLIdentityServerAPI.Configurations
                 //PersistedGrantDbContext
                 options.ConfigureDbContext = builder =>
                 {
-                    builder.UseMySql(connectionString,
+                    builder.UseMySql(connectionString,MySqlServerVersion.LatestSupportedServerVersion,
                         sql =>
                         {
                             sql.MigrationsAssembly(migrationAssembly);
-                            sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql);
+                           // sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql);
                         });
                     //builder.UseMySQL(connectionString, sql =>
                     //{

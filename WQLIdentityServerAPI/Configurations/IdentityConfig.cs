@@ -37,7 +37,7 @@ namespace WQLIdentityServerAPI.Configurations
             services.AddDbContext<MysqlApplicationDbContext>(options =>
             {
                 //options.UseMySql(connectionString, sql => { sql.ServerVersion(new Version(5, 5, 47), ServerType.MySql); });
-                options.UseMySql(connectionString);
+                options.UseMySql(connectionString,MySqlServerVersion.LatestSupportedServerVersion);
 
                 //options.UseSqlServer(connectionString);
             });
