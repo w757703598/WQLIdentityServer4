@@ -1,31 +1,34 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using WQLIdentityServerAPI.Configurations.Consts;
+using WQLIdentityServerAPI.Models;
 
 namespace WQLIdentityServerAPI.Configurations
 {
     public static class DataBaseConfig
     {
-        public static void ConfigDataBase(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigDataBase(this IServiceCollection services,SettingOptions option)
         {
-            var databaseType = configuration.GetSection("Settings")["DatabaseType"];
+     
+            var databaseType = option.DatabaseType;
             if (databaseType.ToLower() == DatabaseConst.Mysql)
             {
 
-                string connectionString = configuration.GetConnectionString(DatabaseConst.MySqlConnection);
+                string connectionString = option.MySqlConnection;
                 //注册asp.net Identity
-                services.ConfigIdentityByMysql(configuration, connectionString);
+                services.ConfigIdentityByMysql(connectionString);
                 //注册Identityserver4认证服务
-                services.ConfigIdentityServerByMysql(configuration, connectionString);
+                services.ConfigIdentityServerByMysql( connectionString);
 
             }
             else
             {
-                string connectionString = configuration.GetConnectionString(DatabaseConst.SqlServerConnection);
+                string connectionString = option.SqlServerConnection;
                 //注册asp.net Identity
-                services.ConfigIdentityBySqlServer(configuration, connectionString);
+                services.ConfigIdentityBySqlServer(connectionString);
                 //注册Identityserver4认证服务
-                services.ConfigIdentityServerBySqlServer(configuration, connectionString);
+                services.ConfigIdentityServerBySqlServer( connectionString);
             }
 
 

@@ -118,12 +118,19 @@ namespace WQLIdentityServerAPI
                 //管理前端默认客户端
                 new Client
                 {
-                    ClientId = "vuejsclient",
+                    ClientId = "IdentityServer4",
                     ClientName = "base JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
                     Description="IdentityServer4管理客户端",
-                    RedirectUris = { "http://localhost:8082/oidc-callback", "http://localhost:8082/silent-renew.html", "http://10.53.28.168:8082/oidc-callback", "http://10.53.28.168:8082/silent-renew.html" },
+                    RedirectUris = { 
+                        "http://localhost:8082/oidc-callback",
+                        "http://localhost:8082/silent-renew.html",
+
+                         "http://localhost:5001/doc/oauth2-redirect.html", //swagger oauth2
+
+                        "http://10.53.28.168:8082/oidc-callback", 
+                        "http://10.53.28.168:8082/silent-renew.html" },
                     PostLogoutRedirectUris = { "http://localhost:8082" },
                     AllowOfflineAccess=true,
                     AllowedScopes =

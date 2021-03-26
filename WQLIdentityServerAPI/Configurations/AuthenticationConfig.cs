@@ -19,7 +19,7 @@ namespace WQLIdentityServerAPI.Configurations
              .AddJwtBearer("Bearer", options =>
             {
 
-                var configUrl = configuration["authUrls"];
+                var configUrl = configuration.GetSection("IdentityServer4")["authUrls"];
                 options.Authority = configUrl;
                 options.RequireHttpsMetadata = false;
                 //options.Audience = "IdentityServer";

@@ -9,7 +9,7 @@ namespace WQLIdentityServerAPI.Configurations
 {
     public static class IdentityConfig
     {
-        public static void ConfigIdentityBySqlServer(this IServiceCollection services, IConfiguration configuration, string connectionString)
+        public static void ConfigIdentityBySqlServer(this IServiceCollection services, string connectionString)
         {
             //const string connectionString = @"Server=.;Database=IdentityServer;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -30,7 +30,7 @@ namespace WQLIdentityServerAPI.Configurations
                 .AddDefaultTokenProviders();
 
         }
-        public static void ConfigIdentityByMysql(this IServiceCollection services, IConfiguration configuration, string connectionString)
+        public static void ConfigIdentityByMysql(this IServiceCollection services, string connectionString)
         {
             //const string connectionString = @"Server=.;Database=IdentityServer;Trusted_Connection=True;MultipleActiveResultSets=true";
 

@@ -58,7 +58,7 @@ namespace WQLIdentityServerAPI.SeedData
                     SecurityStamp = "admin",
                 };
 
-                var result = await _userManager.CreateAsync(defaultUser, "123456");
+                var result = await _userManager.CreateAsync(defaultUser, "admin@123...");
 
                 if (!result.Succeeded)
 

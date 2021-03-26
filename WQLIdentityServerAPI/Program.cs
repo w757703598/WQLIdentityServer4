@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
@@ -51,16 +52,23 @@ namespace WQLIdentityServerAPI
 
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        public static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            var config = new ConfigurationBuilder().AddJsonFile("host.json", optional: true).Build();//发布地址配置文件
-            return WebHost.CreateDefaultBuilder(args)
-                    .UseStartup<Startup>()
-                    .ConfigureLogging(opt => opt.AddDebug())
-                    .ConfigureServices(service => service.AddAutofac())
-                    .UseConfiguration(config)
-                    .UseNLog()
-            ;
+            //var config = new ConfigurationBuilder().AddJsonFile("host.json", optional: true).Build();//发布地址配置文件
+            return Host.CreateDefaultBuilder(args)
+                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>()
+                    .ConfigureLogging(opt =>
+                    {
+
+
+                    } )          
+                    //.UseConfiguration(config)
+                    .UseNLog();
+                });
+     
         }
     }
 }

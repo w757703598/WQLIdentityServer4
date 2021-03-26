@@ -12,7 +12,7 @@ namespace WQLIdentityServerAPI.Configurations
 {
     public static class IdentityServerConfig
     {
-        public static void ConfigIdentityServerBySqlServer(this IServiceCollection services, IConfiguration configuration, string connectionString)
+        public static void ConfigIdentityServerBySqlServer(this IServiceCollection services, string connectionString)
         {
 
 
@@ -29,8 +29,7 @@ namespace WQLIdentityServerAPI.Configurations
             })
 
                 .AddDeveloperSigningCredential()
-
-                   .AddConfigurationStore(options =>
+                   .AddConfigurationStore<CustomConfigurationDbContext>(options =>
                    {
                        //ConfigurationDbContext
                        options.ConfigureDbContext = builder =>
@@ -39,7 +38,7 @@ namespace WQLIdentityServerAPI.Configurations
                                sql => sql.MigrationsAssembly(migrationAssembly));
                        };
                    })
-                .AddOperationalStore(options =>
+                .AddOperationalStore<CustomPersistedGrantDbContext>(options =>
                 {
 
                     //PersistedGrantDbContext
@@ -59,7 +58,7 @@ namespace WQLIdentityServerAPI.Configurations
 
         }
 
-        public static void ConfigIdentityServerByMysql(this IServiceCollection services, IConfiguration configuration, string connectionString)
+        public static void ConfigIdentityServerByMysql(this IServiceCollection services,  string connectionString)
         {
 
 

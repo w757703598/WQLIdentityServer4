@@ -1,16 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IdentityServer4.EntityFramework.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using WQLIdentity.Application.Interfaces;
+using WQLIdentity.Domain.Interface;
 using WQLIdentityServerAPI.Configurations.Consts;
 
 namespace WQLIdentityServerAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Policy = PolicyConst.Manager, AuthenticationSchemes = "Bearer")]
+    //[Authorize(Policy = PolicyConst.Manager, AuthenticationSchemes = "Bearer")]
     public class TestValueController : ControllerBase
     {
+
+        private IApiResourceService _apiresouceService;
+        public TestValueController(IApiResourceService apiresouceService)
+        {
+            _apiresouceService = apiresouceService;
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<ServiceDto>> Get()
         {
@@ -51,6 +61,12 @@ namespace WQLIdentityServerAPI.Controllers
           });
             return Ok(user);
 
+        }
+        [HttpGet]
+        public IActionResult Test()
+        {
+            _apiresouceService.GetApiResources(null);
+            return Ok();
         }
     }
     public class ServiceDto

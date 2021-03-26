@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System.Reflection;
 using WQLIdentityServerAPI.Configurations;
+using WQLIdentityServerAPI.Middleware;
 using WQLIdentityServerAPI.Middleware.Exceptions;
-
+using WQLIdentityServerAPI.Models;
 
 namespace WQLIdentityServerAPI
 {
@@ -21,20 +24,32 @@ namespace WQLIdentityServerAPI
         }
         public IConfiguration Configuration { get; }
 
+        private SettingOptions _options;
 
+        private IServiceCollection _services;
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //注册appsettings.json 中的settings
+            _options = Configuration.GetSection(SettingOptions.Name).Get<SettingOptions>();
+            services.Configure<SettingOptions>(Configuration.GetSection(SettingOptions.Name));
+
             //samesite
             services.AddSameSiteCookiePolicy();
 
 
             services.AddControllersWithViews()
-             .AddJsonOptions(options =>
-             {
-                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                 .AddRazorRuntimeCompilation()
+                 .AddJsonOptions(options =>
+                 {
+                     options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
 
-             });
+                 });
+
+            services.ConfigMiniProfiler(_options);
+
+
+
 
             services.Configure<IISOptions>(iis =>
             {
@@ -67,7 +82,7 @@ namespace WQLIdentityServerAPI
             services.AddPolicies();
 
             //认证服务器
-            services.ConfigDataBase(Configuration);
+            services.ConfigDataBase(_options);
 
 
 
@@ -78,10 +93,18 @@ namespace WQLIdentityServerAPI
 
             //添加认证过滤
             services.ConfigAuthentication(Configuration);
+
+
+            _services = services;
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            if (_options.UseMinProfiler)
+            {
+                app.UseMiniProfiler();
+            }
+            
 
             app.UseCookiePolicy();
 
@@ -96,7 +119,7 @@ namespace WQLIdentityServerAPI
 
             app.UseCors(AllowAnyDomain);
 
-
+            app.UseAllServicesMildd(_services);
 
             app.UseIdentityServer();
 
@@ -108,8 +131,9 @@ namespace WQLIdentityServerAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "KnowledgeBaseAPI");
-
+                c.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("WQLIdentityServerAPI.swaggerIndex.html");
                 c.RoutePrefix = "doc";
+                c.OAuthClientId("IdentityServer4");
             });
 
 

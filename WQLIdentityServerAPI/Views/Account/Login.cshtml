@@ -1,9 +1,8 @@
-@model LoginViewModel
+﻿@model LoginViewModel
 
 <div class="login-page">
     <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
+        <h1>登录</h1>
     </div>
 
     <partial name="_ValidationSummary" />
@@ -15,7 +14,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Local Account</h2>
+                        <h2>本地账号</h2>
                     </div>
 
                     <div class="card-body">
@@ -36,13 +35,13 @@
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="RememberLogin">
                                         <label class="form-check-label" asp-for="RememberLogin">
-                                            Remember My Login
+                                            记住我
                                         </label>
                                     </div>
                                 </div>
                             }
-                            <button class="btn btn-primary" name="button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
+                            <button class="btn btn-primary" name="button" value="login">登录</button>
+                            <button class="btn btn-secondary" name="button" value="cancel">取消</button>
                         </form>
                     </div>
                 </div>

@@ -9,7 +9,6 @@ using WQLIdentity.Application.Interfaces;
 using WQLIdentity.Domain.Interface;
 using WQLIdentityServer.Infra.Dto;
 using WQLIdentityServer.Infra.Extensions;
-using ApiResource = IdentityServer4.EntityFramework.Entities.ApiResource;
 
 namespace WQLIdentity.Application.Services
 {
@@ -23,7 +22,7 @@ namespace WQLIdentity.Application.Services
         public ApiResourceService(IConfigurationRepository<ApiResource> apiresourceRepository, IConfigurationRepository<ApiScope> apiscopeRepository, IConfigurationRepository<ApiResourceSecret> apisecretRepository, IConfigurationRepository<ApiResourceProperty> apipropertyRepository, IMapper mapper)
         {
             _apipropertyRepository = apipropertyRepository;
-
+            _apiscopeRepository = apiscopeRepository;
             _apiresourceRepository = apiresourceRepository;
             _apisecretRepository = apisecretRepository;
             _mapper = mapper;
