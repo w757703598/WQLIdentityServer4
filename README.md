@@ -62,7 +62,7 @@
 ## :video_game: Stars 趋势图
 
 [![Stargazers over time](https://whnb.wang/stars/wangqianlong1993/IdentityServer4?e=43200)](https://whnb.wang/dotnetchina/Furion?e=43200)
-##:smiling_imp: 开发说明
+## :smiling_imp: 开发说明
 ### :heart:后台
 1. :sweat_drops: 最新功能在IdentityServer4_v4.0分支进行开发，请切换IdentityServer4_v4.0查看
     ```
