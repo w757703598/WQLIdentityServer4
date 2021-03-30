@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WQLIdentity.Infra.Data.Mysq
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5D9BE5D8-47AC-4069-A870-E5F3C315012A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WQLIdentity.Application.Test", "WQLIdentity.Application.Test\WQLIdentity.Application.Test.csproj", "{27E6FA95-C607-4EEF-9FD7-B241917FC27D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WQLIdentity.Application.Test", "WQLIdentity.Application.Test\WQLIdentity.Application.Test.csproj", "{27E6FA95-C607-4EEF-9FD7-B241917FC27D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WQLIdentityTestFaker", "WQLIdentityTestFaker\WQLIdentityTestFaker.csproj", "{B9EEF3F3-102D-489A-8E67-8D6695E5C699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WQLIdentityTestFaker", "WQLIdentityTestFaker\WQLIdentityTestFaker.csproj", "{B9EEF3F3-102D-489A-8E67-8D6695E5C699}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

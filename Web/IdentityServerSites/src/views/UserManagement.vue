@@ -1,16 +1,53 @@
 <template>
   <el-main>
     <el-scrollbar wrap-class="scrollbar-wrapper-y">
-      <div class="flex">
-        <el-input v-model="search" size="mini" placeholder="请输入关键字检索"></el-input>
-        <el-button type="primary" size="mini" @click="flush()">查询</el-button>
-        <div class="flex1"></div>
-        <el-button type="success" size="mini" icon="el-icon-circle-plus" @click="create()">创建用户</el-button>
-        <el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteUser()">删除用户</el-button>
+      <div class="tool-header">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-input
+              v-model="search"
+              size="mini"
+              style="width:200px;margin-right:10px"
+              placeholder="请输入关键字检索"
+            />
+            <el-button
+              type="primary"
+              size="mini"
+              @click="flush()"
+            >
+              查询
+            </el-button>
+          </el-col>
+
+          <el-col
+            :span="6"
+            :offset="6"
+          >  
+            <div class="tool-header-right">
+              <el-button
+                type="success"
+                size="mini"
+                icon="el-icon-circle-plus"
+                @click="create()"
+              >
+                创建用户
+              </el-button>
+              <el-button
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+                @click="deleteUser()"
+              >
+                删除用户
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
       </div>
+
       <el-table
-        :data="userData"
         ref="multipleTable"
+        :data="userData"
         tooltip-effect="dark"
         size="mini"
         border
@@ -19,37 +56,72 @@
         :stripe="true"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" align="center"></el-table-column>
-        <el-table-column prop="id" width="80" align="center" label="序号"></el-table-column>
-        <el-table-column prop="userName" label="账号" align="center"></el-table-column>
-        <el-table-column prop="name" label="用户名" align="center"></el-table-column>
+        <el-table-column
+          type="selection"
+          align="center"
+        />
+        <el-table-column
+          prop="id"
+          width="80"
+          align="center"
+          label="序号"
+        />
+        <el-table-column
+          prop="userName"
+          label="账号"
+          align="center"
+        />
+        <el-table-column
+          prop="name"
+          label="用户名"
+          align="center"
+        />
 
-        <el-table-column prop="createdOn" label="创建时间" align="center" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="createdOn"
+          label="创建时间"
+          align="center"
+          show-overflow-tooltip
+        />
 
-        <el-table-column label="操作" align="center" width="100px">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="100px"
+        >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-edit"
+              @click="edit(scope.row)"
+            >
+              编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         class="page_footer_box"
-        @current-change="flush()"
-        @size-change="flush()"
         background
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalCount"
         :current-page.sync="currentPage"
         :page-sizes="[1,10,30,50]"
         :page-size.sync="pageSize"
-      ></el-pagination>
-      <user-edit v-if="config.show" :config="config" @flush="flush"></user-edit>
+        @current-change="flush()"
+        @size-change="flush()"
+      />
+      <user-edit
+        v-if="config.show"
+        :config="config"
+        @flush="flush"
+      />
     </el-scrollbar>
   </el-main>
 </template>
 <script>
 import userEdit from "../components/modules/UserEdit";
-import { async } from "q";
 export default {
   components: {
     userEdit
@@ -69,6 +141,9 @@ export default {
       },
       multipleSelection: []
     };
+  },
+  mounted() {
+    this.flush();
   },
   methods: {
     handleSelectionChange(val) {
@@ -142,9 +217,6 @@ export default {
         });
       }
     }
-  },
-  mounted() {
-    this.flush();
   }
 };
 </script>
@@ -170,7 +242,7 @@ export default {
   width: 100%;
   height: 36px;
   white-space: nowrap;
-  /deep/ {
+  ::v-deep {
     .el-scrollbar__bar {
       bottom: 0px;
       &.is-vertical {

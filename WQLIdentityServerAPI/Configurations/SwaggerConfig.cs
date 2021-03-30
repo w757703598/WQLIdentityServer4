@@ -27,6 +27,10 @@ namespace WQLIdentityServerAPI.Configurations
                 c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
 
+   
+
+
+
                 //接入identityserver4
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -35,6 +39,7 @@ namespace WQLIdentityServerAPI.Configurations
                     {
                         Implicit = new OpenApiOAuthFlow
                         {
+                           
                             AuthorizationUrl = new Uri($"{configuration.GetSection("IdentityServer4")["authUrls"]}/connect/authorize"),
                             Scopes = new Dictionary<string, string> {
                                 {

@@ -1,15 +1,52 @@
 <template>
   <el-main>
-    <div class="flex">
-      <el-input v-model="search" size="mini" placeholder="请输入关键字检索"></el-input>
-      <el-button type="primary" size="mini" @click="flush()">查询</el-button>
-      <div class="flex1"></div>
-      <el-button type="success" size="mini" icon="el-icon-circle-plus" @click="AddApiResource()">创建</el-button>
-      <el-button type="danger" size="mini" icon="el-icon-delete" @click="DeleteApiResource()">删除</el-button>
+    <div class="tool-header">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-input
+            v-model="search"
+            size="mini"
+            style="width:200px;margin-right:10px"
+            placeholder="请输入关键字检索"
+          />
+          <el-button
+            type="primary"
+            size="mini"
+            @click="flush()"
+          >
+            查询
+          </el-button>
+        </el-col>
+
+        <el-col
+          :span="6"
+          :offset="6"
+        >  
+          <div class="tool-header-right">
+            <el-button
+              type="success"
+              size="mini"
+              icon="el-icon-circle-plus"
+              @click="AddApiResource()"
+            >
+              创建
+            </el-button>
+            <el-button
+              type="danger"
+              size="mini"
+              icon="el-icon-delete"
+              @click="DeleteApiResource()"
+            >
+              删除
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
     </div>
+
     <el-table
-      :data="ApiresourceData"
       ref="multipleTable"
+      :data="ApiresourceData"
       tooltip-effect="dark"
       size="mini"
       border
@@ -18,31 +55,75 @@
       :stripe="true"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" prop="id" label="序号"></el-table-column>
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column prop="created" label="创建时间"></el-table-column>
-      <el-table-column label="操作" align="center" width="350px">
+      <el-table-column
+        type="selection"
+        prop="id"
+        label="序号"
+      />
+      <el-table-column
+        prop="name"
+        label="名称"
+      />
+      <el-table-column
+        prop="description"
+        label="描述"
+      />
+      <el-table-column
+        prop="created"
+        label="创建时间"
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        width="350px"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
-          <el-button type="primary" size="mini" @click="jump('ApiScopes',scope.row)">API作用域</el-button>
-          <el-button type="primary" size="mini" @click="jump('ApiSecret',scope.row)">API密钥</el-button>
-          <el-button type="primary" size="mini" @click="jump('ApiProperties',scope.row)">API属性</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="edit(scope.row)"
+          >
+            编辑
+          </el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="jump('ApiScopes',scope.row)"
+          >
+            API作用域
+          </el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="jump('ApiSecret',scope.row)"
+          >
+            API密钥
+          </el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="jump('ApiProperties',scope.row)"
+          >
+            API属性
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
       class="page_footer_box"
-      @current-change="flush()"
-      @size-change="flush()"
       background
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalCount"
       :current-page.sync="currentPage"
       :page-sizes="[1,10,30,50]"
       :page-size.sync="pageSize"
-    ></el-pagination>
-    <apiresource-Edit :config="config" @flush="flush"></apiresource-Edit>
+      @current-change="flush()"
+      @size-change="flush()"
+    />
+    <apiresource-Edit
+      :config="config"
+      @flush="flush"
+    />
   </el-main>
 </template>
 <script>

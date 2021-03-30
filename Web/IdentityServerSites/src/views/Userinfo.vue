@@ -2,38 +2,81 @@
   <el-card>
     <div class="container">
       <el-form
+        ref="Userform"
         :rules="rules"
         label-width="120px"
         label-position="left"
         :model="userinfo"
-        ref="Userform"
       >
-        <el-form-item label="账号:" prop="name">
-          <el-input size="mini" v-model="userinfo.name" :disabled="true"></el-input>
+        <el-form-item
+          label="账号:"
+          prop="name"
+        >
+          <el-input
+            v-model="userinfo.name"
+            size="mini"
+            :disabled="true"
+          />
         </el-form-item>
-        <el-form-item label="姓名:" prop="userName">
-          <el-input size="mini" v-model="userinfo.userName" :disabled="true"></el-input>
+        <el-form-item
+          label="姓名:"
+          prop="userName"
+        >
+          <el-input
+            v-model="userinfo.userName"
+            size="mini"
+            :disabled="true"
+          />
         </el-form-item>
-        <el-form-item label="旧密码:" prop="oldPassword">
-          <el-input size="mini" v-model="userinfo.oldPassword"></el-input>
+        <el-form-item
+          label="旧密码:"
+          prop="oldPassword"
+        >
+          <el-input
+            v-model="userinfo.oldPassword"
+            size="mini"
+          />
         </el-form-item>
-        <el-form-item label="密码:" prop="passWord">
-          <el-input size="mini" v-model="userinfo.passWord"></el-input>
+        <el-form-item
+          label="密码:"
+          prop="passWord"
+        >
+          <el-input
+            v-model="userinfo.passWord"
+            size="mini"
+          />
         </el-form-item>
-        <el-form-item label="确认密码:" prop="confirmPassword">
-          <el-input size="mini" v-model="userinfo.confirmPassword"></el-input>
+        <el-form-item
+          label="确认密码:"
+          prop="confirmPassword"
+        >
+          <el-input
+            v-model="userinfo.confirmPassword"
+            size="mini"
+          />
         </el-form-item>
         <div class="dialog-footer el-message-box__btns">
-          <el-button type="info" size="mini" @click="close(false)">取消</el-button>
-          <el-button type="primary" size="mini" @click="Submit()">确认</el-button>
+          <el-button
+            type="info"
+            size="mini"
+            @click="close(false)"
+          >
+            取消
+          </el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="Submit()"
+          >
+            确认
+          </el-button>
         </div>
       </el-form>
     </div>
   </el-card>
 </template>
 <script>
-import Mgr from "../services/SecurityService";
-import { async } from "q";
+import { mapGetters } from 'vuex';
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -44,7 +87,7 @@ export default {
     };
 
     return {
-      mgr: new Mgr(),
+     
       userinfo: {},
       rules: {
         userName: [{ required: true, message: "请输入账户", trigger: "blur" }],
@@ -61,13 +104,16 @@ export default {
       }
     };
   },
-
-  async mounted() {
-    this.userinfo = await this.GetUserinfo();
+  computed:{
+    ...mapGetters(["oidcUser"])
+  },
+   mounted() {
+      this.userinfo= this.GetUserinfo()
   },
   methods: {
-    async GetUserinfo() {
-      var user = await this.mgr.getProfile();
+     GetUserinfo() {
+      var user =  this.oidcUser;
+      console.info(user)
       return {
         name: user.name,
         userName: user.username,

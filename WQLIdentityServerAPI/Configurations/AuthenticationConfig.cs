@@ -22,7 +22,7 @@ namespace WQLIdentityServerAPI.Configurations
                 var configUrl = configuration.GetSection("IdentityServer4")["authUrls"];
                 options.Authority = configUrl;
                 options.RequireHttpsMetadata = false;
-                //options.Audience = "IdentityServer";
+                options.Audience = configuration.GetSection("IdentityServer4")["Audience"];
 
 
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters

@@ -1,15 +1,52 @@
 <template>
   <el-main>
-    <div class="flex">
-      <el-input v-model="search" size="mini" placeholder="请输入关键字检索"></el-input>
-      <el-button type="primary" size="mini" @click="flush()">查询</el-button>
-      <div class="flex1"></div>
-      <el-button type="success" size="mini" icon="el-icon-circle-plus" @click="AddClaim()">创建</el-button>
-      <el-button type="danger" size="mini" icon="el-icon-delete" @click="DeleteClaims()">删除</el-button>
+    <div class="tool-header">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-input
+            v-model="search"
+            size="mini"
+            style="width:200px;margin-right:10px"
+            placeholder="请输入关键字检索"
+          />
+          <el-button
+            type="primary"
+            size="mini"
+            @click="flush()"
+          >
+            查询
+          </el-button>
+        </el-col>
+
+        <el-col
+          :span="6"
+          :offset="6"
+        >  
+          <div class="tool-header-right">
+            <el-button
+              type="success"
+              size="mini"
+              icon="el-icon-circle-plus"
+              @click="AddClaim()"
+            >
+              创建
+            </el-button>
+            <el-button
+              type="danger"
+              size="mini"
+              icon="el-icon-delete"
+              @click="DeleteClaims()"
+            >
+              删除
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
     </div>
+
     <el-table
-      :data="claimsDta"
       ref="multipleTable"
+      :data="claimsDta"
       tooltip-effect="dark"
       size="mini"
       border
@@ -18,24 +55,43 @@
       :stripe="true"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" prop="id" label="序号"></el-table-column>
-      <el-table-column prop="type" label="类型"></el-table-column>
-      <el-table-column prop="value" label="值"></el-table-column>
-      <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column prop="createdOn" label="创建时间"></el-table-column>
+      <el-table-column
+        type="selection"
+        prop="id"
+        label="序号"
+      />
+      <el-table-column
+        prop="type"
+        label="类型"
+      />
+      <el-table-column
+        prop="value"
+        label="值"
+      />
+      <el-table-column
+        prop="description"
+        label="描述"
+      />
+      <el-table-column
+        prop="createdOn"
+        label="创建时间"
+      />
     </el-table>
     <el-pagination
       class="page_footer_box"
-      @current-change="flush()"
-      @size-change="flush()"
       background
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalCount"
       :current-page.sync="currentPage"
       :page-sizes="[1,10,30,50]"
       :page-size.sync="pageSize"
-    ></el-pagination>
-    <claim-create :config="config" @flush="flush"></claim-create>
+      @current-change="flush()"
+      @size-change="flush()"
+    />
+    <claim-create
+      :config="config"
+      @flush="flush"
+    />
   </el-main>
 </template>
 

@@ -1,16 +1,53 @@
 <template>
   <el-main>
     <el-scrollbar wrap-class="scrollbar-wrapper-y">
-      <div class="flex">
-        <el-input v-model="search" size="mini" placeholder="请输入关键字检索"></el-input>
-        <el-button type="primary" size="mini" @click="flush()">查询</el-button>
-        <div class="flex1"></div>
-        <el-button type="success" size="mini" icon="el-icon-circle-plus" @click="create()">创建客户端</el-button>
-        <el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteClient()">删除客户端</el-button>
+      <div class="tool-header">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-input
+              v-model="search"
+              size="mini"
+              style="width:200px;margin-right:10px"
+              placeholder="请输入关键字检索"
+            />
+            <el-button
+              type="primary"
+              size="mini"
+              @click="flush()"
+            >
+              查询
+            </el-button>
+          </el-col>
+
+          <el-col
+            :span="6"
+            :offset="6"
+          >  
+            <div class="tool-header-right">
+              <el-button
+                type="success"
+                size="mini"
+                icon="el-icon-circle-plus"
+                @click="create()"
+              >
+                创建客户端
+              </el-button>
+              <el-button
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+                @click="deleteClient()"
+              >
+                删除客户端
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
       </div>
+
       <el-table
-        :data="Clients"
         ref="multipleTable"
+        :data="Clients"
         tooltip-effect="dark"
         size="mini"
         border
@@ -19,44 +56,101 @@
         :stripe="true"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="id" width="60" align="center" type="selection"></el-table-column>
-        <el-table-column prop="id" width="80" align="center" label="序号"></el-table-column>
-        <el-table-column prop="clientId" label="客户端标识" align="center"></el-table-column>
-        <el-table-column prop="clientName" label="客户端名称" align="center"></el-table-column>
-        <el-table-column prop="enabled" label="是否启用" align="center" show-overflow-tooltip>
+        <el-table-column
+          prop="id"
+          width="60"
+          align="center"
+          type="selection"
+        />
+        <el-table-column
+          prop="id"
+          width="80"
+          align="center"
+          label="序号"
+        />
+        <el-table-column
+          prop="clientId"
+          label="客户端标识"
+          align="center"
+        />
+        <el-table-column
+          prop="clientName"
+          label="客户端名称"
+          align="center"
+        />
+        <el-table-column
+          prop="enabled"
+          label="是否启用"
+          align="center"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
-            <el-switch disabled v-model="scope.row.enabled"></el-switch>
+            <el-switch
+              v-model="scope.row.enabled"
+              disabled
+            />
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" align="center" width="300px">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="300px"
+        >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="jump('ApiSecret',scope.row)">API密钥</el-button>
-            <el-button type="primary" size="mini" @click="jump('ApiProperties',scope.row)">API属性</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-edit"
+              @click="edit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="jump('ApiSecret',scope.row)"
+            >
+              API密钥
+            </el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="jump('ApiProperties',scope.row)"
+            >
+              API属性
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         class="page_footer_box"
-        @current-change="flush()"
-        @size-change="flush()"
         background
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalCount"
         :current-page.sync="currentPage"
         :page-sizes="[1,10,30,50]"
         :page-size.sync="pageSize"
-      ></el-pagination>
-      <client-create v-if="config.show" :config="config" @flush="flush"></client-create>
-      <client-edit v-if="editconfig.show" @flush="flush" :config="editconfig"></client-edit>
+        @current-change="flush()"
+        @size-change="flush()"
+      />
+      <client-create
+        v-if="config.show"
+        :config="config"
+        @flush="flush"
+      />
+      <client-edit
+        v-if="editconfig.show"
+        :config="editconfig"
+        @flush="flush"
+      />
     </el-scrollbar>
   </el-main>
 </template>
 <script>
 import ClientCreate from "../components/modules/ClientCreate";
 import ClientEdit from "../components/modules/ClientEdit";
-import { async } from "q";
+
 export default {
   components: {
     ClientCreate,
@@ -83,6 +177,9 @@ export default {
       },
       multipleSelection: []
     };
+  },
+  mounted() {
+    this.flush();
   },
   methods: {
     handleSelectionChange(val) {
@@ -151,9 +248,6 @@ export default {
         });
       }
     }
-  },
-  mounted() {
-    this.flush();
   }
 };
 </script>
@@ -179,7 +273,7 @@ export default {
   width: 100%;
   height: 36px;
   white-space: nowrap;
-  /deep/ {
+::v-deep {
     .el-scrollbar__bar {
       bottom: 0px;
       &.is-vertical {

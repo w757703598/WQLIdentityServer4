@@ -226,15 +226,5 @@ export default {
 .el-tag {
   margin: 2px;
 }
-.el-form {
-  .el-form-item {
-    margin-bottom: 4px;
-    .el-input {
-      width: 90%;
-    }
-    .el-select {
-      width: 90%;
-    }
-  }
-}
+
 </style>

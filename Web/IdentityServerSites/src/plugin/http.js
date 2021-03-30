@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Loading } from 'element-ui'
 import { Message } from 'element-ui'
 
-import store from '@/store'
+import store from '../store'
 
 // create an axios instance
 const service = axios.create({

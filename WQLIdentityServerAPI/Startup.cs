@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 using System.Reflection;
 using WQLIdentityServerAPI.Configurations;
 using WQLIdentityServerAPI.Middleware;
@@ -34,8 +36,11 @@ namespace WQLIdentityServerAPI
             _options = Configuration.GetSection(SettingOptions.Name).Get<SettingOptions>();
             services.Configure<SettingOptions>(Configuration.GetSection(SettingOptions.Name));
 
+            services.ConfigCors(AllowAnyDomain);
+
             //samesite
             services.AddSameSiteCookiePolicy();
+
 
 
             services.AddControllersWithViews()
@@ -67,7 +72,7 @@ namespace WQLIdentityServerAPI
             //自动转换
             services.ConfigAutoMapper();
 
-            services.ConfigCors(AllowAnyDomain);
+
 
             services.ConfigureSwagger(Configuration);
 
@@ -127,9 +132,17 @@ namespace WQLIdentityServerAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
+            app.UseSwagger(c => {
+
+                c.PreSerializeFilters.Add((swagger, httpReq) =>
+                {
+                    swagger.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}" } };
+                });
+            });
+
             app.UseSwaggerUI(c =>
             {
+ 
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "KnowledgeBaseAPI");
                 c.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("WQLIdentityServerAPI.swaggerIndex.html");
                 c.RoutePrefix = "doc";

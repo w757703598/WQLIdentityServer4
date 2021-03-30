@@ -1,16 +1,52 @@
 <template>
   <el-main>
     <el-scrollbar wrap-class="scrollbar-wrapper-y">
-      <div class="flex">
-        <el-input v-model="search" size="mini" placeholder="请输入关键字检索"></el-input>
-        <el-button type="primary" size="mini" @click="flush()">查询</el-button>
-        <div class="flex1"></div>
-        <el-button type="success" size="mini" icon="el-icon-circle-plus" @click="edit()">创建角色</el-button>
-        <el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteRole()">删除角色</el-button>
+      <div class="tool-header">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-input
+              v-model="search"
+              size="mini"
+              style="width:200px;margin-right:10px"
+              placeholder="请输入关键字检索"
+            />
+            <el-button
+              type="primary"
+              size="mini"
+              @click="flush()"
+            >
+              查询
+            </el-button>
+          </el-col>
+
+          <el-col
+            :span="6"
+            :offset="6"
+          >  
+            <div class="tool-header-right">
+              <el-button
+                type="success"
+                size="mini"
+                icon="el-icon-circle-plus"
+                @click="edit()"
+              >
+                创建角色
+              </el-button>
+              <el-button
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+                @click="deleteRole()"
+              >
+                删除角色
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
       </div>
       <el-table
-        :data="roleData"
         ref="multipleTable"
+        :data="roleData"
         tooltip-effect="dark"
         size="mini"
         border
@@ -19,37 +55,77 @@
         :stripe="true"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" align="center"></el-table-column>
-        <el-table-column prop="id" width="80" align="center" label="序号"></el-table-column>
-        <el-table-column prop="name" label="角色名称" align="center"></el-table-column>
-        <el-table-column prop="createdOn" label="创建时间" align="center" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          type="selection"
+          align="center"
+        />
+        <el-table-column
+          prop="id"
+          width="80"
+          align="center"
+          label="序号"
+        />
+        <el-table-column
+          prop="name"
+          label="角色名称"
+          align="center"
+        />
+        <el-table-column
+          prop="createdOn"
+          label="创建时间"
+          align="center"
+          show-overflow-tooltip
+        />
 
-        <el-table-column label="操作" align="center" width="180px">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="180px"
+        >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="editClaim(scope.row)">管理声明</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="edit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="editClaim(scope.row)"
+            >
+              管理声明
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         class="page_footer_box"
-        @current-change="flush()"
-        @size-change="flush()"
         background
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalCount"
         :current-page.sync="currentPage"
         :page-sizes="[1,10,30,50]"
         :page-size.sync="pageSize"
-      ></el-pagination>
-      <role-edit v-if="config.show" :config="config" @flush="flush"></role-edit>
+        @current-change="flush()"
+        @size-change="flush()"
+      />
+      <role-edit
+        v-if="config.show"
+        :config="config"
+        @flush="flush"
+      />
       <el-dialog
         :visible.sync="claimConfig.show"
         :title="claimConfig.title"
         width="800px"
         append-to-body
       >
-        <claim-edit v-if="claimConfig.show" :config="claimConfig"></claim-edit>
+        <claim-edit
+          v-if="claimConfig.show"
+          :config="claimConfig"
+        />
       </el-dialog>
     </el-scrollbar>
   </el-main>
@@ -57,7 +133,6 @@
 <script>
 import roleEdit from "../components/modules/RoleEdit";
 import claimEdit from "../components/modules/ClaimEdit";
-import { async } from "q";
 export default {
   components: {
     roleEdit,
@@ -84,6 +159,9 @@ export default {
       },
       multipleSelection: []
     };
+  },
+  mounted() {
+    this.flush();
   },
   methods: {
     handleSelectionChange(val) {
@@ -154,9 +232,6 @@ export default {
         });
       }
     }
-  },
-  mounted() {
-    this.flush();
   }
 };
 </script>
@@ -166,23 +241,18 @@ export default {
   float: right;
   margin: 3px, 10px;
 }
-.content {
-  flex: 1;
-  width: 100%;
-  padding: 0;
-  height: 100%;
-
-  display: flex;
-
-  flex-direction: column;
-
-  flex-wrap: wrap;
+.tool-header{
+  margin-bottom: 5px;
+  .tool-header-right{
+      position: absolute;
+      right: 5px;
+  }
 }
 .scroll-container {
   width: 100%;
   height: 36px;
   white-space: nowrap;
-  /deep/ {
+::v-deep {
     .el-scrollbar__bar {
       bottom: 0px;
       &.is-vertical {
