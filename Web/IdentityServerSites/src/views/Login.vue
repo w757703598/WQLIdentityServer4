@@ -5,14 +5,14 @@
         <span>授权登陆系统</span>
       </div>
       <div class="login_content">
-        <el-form :model="loginForm" ref="loginForm" :rules="rules">
+        <el-form ref="loginForm" :model="loginForm" :rules="rules">
           <el-form-item label="账号:" prop="username">
             <el-input
               v-model="loginForm.username"
               size="mini"
               placeholder="UserName"
               prefix-icon="el-icon-user"
-            ></el-input>
+            />
           </el-form-item>
           <el-form-item label="密码:" prop="password">
             <el-input
@@ -20,7 +20,7 @@
               size="mini"
               placeholder="Password"
               prefix-icon="el-icon-key"
-            ></el-input>
+            />
           </el-form-item>
           <el-form-item label prop="remeber" class="login_check">
             <el-checkbox>是否记住登陆状态</el-checkbox>
@@ -36,56 +36,55 @@
   </div>
 </template>
 <script>
-import { async } from "q";
-import qs from "qs";
-import { mapActions } from "vuex";
+import qs from 'qs'
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       rules: {
-        username: [{ required: true, message: "请输入账户" }],
-        password: [{ required: true, min: 6, message: "密码至少6位" }]
+        username: [{ required: true, message: '请输入账户' }],
+        password: [{ required: true, min: 6, message: '密码至少6位' }]
       },
       loginForm: {
-        username: "030704",
-        password: "123456",
-        grant_type: "password",
-        scope: "api1",
-        client_Id: "AntennaKnowbaseApi",
-        client_secret: "secret"
+        username: '030704',
+        password: '123456',
+        grant_type: 'password',
+        scope: 'api1',
+        client_Id: 'AntennaKnowbaseApi',
+        client_secret: 'secret'
       }
-    };
+    }
   },
   methods: {
-    ...mapActions(["set_token"]),
+    ...mapActions(['set_token']),
     submit() {
-      this.$refs["loginForm"].validate(async valid => {
+      this.$refs['loginForm'].validate(async valid => {
         if (valid) {
           const loading = this.$loading({
             lock: true,
-            text: "Loading",
-            spinner: "el-icon-loading",
-            background: "rgba(0, 0, 0, 0.7)"
-          });
-          let res = await this.$http.post(
-            "connect/token",
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          const res = await this.$http.post(
+            'connect/token',
             qs.stringify(this.loginForm),
             {
-              headers: { "Content-Type": "application/x-www-form-urlencoded" }
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }
-          );
+          )
           if (res) {
-            loading.close();
-            this.set_token(res.access_token);
-            this.$router.push(this.$route.query.redirect);
+            loading.close()
+            this.set_token(res.access_token)
+            this.$router.push(this.$route.query.redirect)
           }
         } else {
-          return false;
+          return false
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

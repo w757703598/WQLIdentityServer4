@@ -22,7 +22,7 @@
           <el-col
             :span="6"
             :offset="6"
-          >  
+          >
             <div class="tool-header-right">
               <el-button
                 type="success"
@@ -121,7 +121,7 @@
   </el-main>
 </template>
 <script>
-import userEdit from "../components/modules/UserEdit";
+import userEdit from '../components/modules/UserEdit'
 export default {
   components: {
     userEdit
@@ -132,93 +132,93 @@ export default {
       totalCount: 0,
       pageSize: 10,
       currentPage: 1,
-      search: "",
+      search: '',
       config: {
         show: false,
-        title: "",
-        type: 0, //0 创建，
+        title: '',
+        type: 0, // 0 创建，
         data: {}
       },
       multipleSelection: []
-    };
+    }
   },
   mounted() {
-    this.flush();
+    this.flush()
   },
   methods: {
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
     },
     async flush() {
-      let result = await this.$http.get("api/UserApp/GetUsers", {
+      const result = await this.$http.get('api/UserApp/GetUsers', {
         Search: this.search,
         isdesc: true,
         Page: this.currentPage,
         PageSize: this.pageSize
-      });
-      this.totalCount = result.totalCount;
-      this.userData = result.data;
+      })
+      this.totalCount = result.totalCount
+      this.userData = result.data
     },
     create() {
-      this.config.title = "创建用户";
+      this.config.title = '创建用户'
       this.config.data = {
-        confirmPassword: "123456",
-        department:"天线开发部",
-        email: "test@mobi.com",
-        name: "wql",
-        passWord: "123456",
-        userName: "030704"
-      };
-      this.config.show = true;
-      this.config.type = 0;
+        confirmPassword: '123456',
+        department: '瞎折腾部',
+        email: 'test@qq.com',
+        name: 'wql',
+        passWord: '123456',
+        userName: 'test'
+      }
+      this.config.show = true
+      this.config.type = 0
     },
     async edit(row) {
-      this.config.type = 1;
-      this.config.show = true;
-      this.config.data = row;
+      this.config.type = 1
+      this.config.show = true
+      this.config.data = row
     },
     delay() {},
     deleteUser() {
       if (this.multipleSelection && this.multipleSelection.length) {
-        const ids = this.multipleSelection.map(item => item.id);
-        this.$confirm("确认删除所选用户?", "删除", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+        const ids = this.multipleSelection.map(item => item.id)
+        this.$confirm('确认删除所选用户?', '删除', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-          .then(async () => {
+          .then(async() => {
             for (let index = 0; index < ids.length; index++) {
-              let result = await this.$http.post(
-                "api/UserApp/DleteUser",
+              const result = await this.$http.post(
+                'api/UserApp/DleteUser',
                 ids[index]
-              );
+              )
               if (result) {
                 this.$message({
                   showClose: true,
-                  type: "success",
-                  message: "删除成功!"
-                });
+                  type: 'success',
+                  message: '删除成功!'
+                })
               }
             }
-            this.flush();
+            this.flush()
           })
           .catch(() => {
             this.$message({
               showClose: true,
-              type: "info",
-              message: "已取消删除!"
-            });
-          });
+              type: 'info',
+              message: '已取消删除!'
+            })
+          })
       } else {
         this.$message({
           showClose: true,
-          type: "warning",
-          message: "请选择要删除的用户"
-        });
+          type: 'warning',
+          message: '请选择要删除的用户'
+        })
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

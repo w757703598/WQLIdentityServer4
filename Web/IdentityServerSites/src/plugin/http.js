@@ -8,12 +8,15 @@ import store from '../store'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000, // request timeout
+  timeout: 5000, // request timeout,
+  headers: {
+    'Content-Type': 'application/json;charset=UTF-8'
+  }
 })
 
-//请求拦截器
+// 请求拦截器
 service.interceptors.request.use(
-  async (config) => {
+  async(config) => {
     if (store.getters.oidcAccessToken) {
       console.info(store.getters.oidcAccessToken)
       config.headers.Authorization = `Bearer ${store.getters.oidcAccessToken}`
@@ -26,7 +29,7 @@ service.interceptors.request.use(
   }
 )
 
-//响应拦截器
+// 响应拦截器
 service.interceptors.response.use(
   (response) => {
     return response
@@ -37,7 +40,7 @@ service.interceptors.response.use(
   }
 )
 
-//处理结果
+// 处理结果
 const handleResult = (res) => {
   console.info(res)
   if (res == null) {
@@ -81,7 +84,7 @@ const handleResult = (res) => {
 
 // axios.defaults.baseURL = 'http://10.53.28.168:5010/';
 // axios.defaults.headers = {
-//   'Content-Type': 'application/json;charset=UTF-8',
+//   'Content-Type': 'application/json;charset=UTF-8'
 //   // Authorization: "bearer " + cookie.get("access_token")
 // }
 
@@ -91,12 +94,12 @@ var http = {
   /** block ui */
   block() {
     this.count = this.count + 1
-    if (this.count != 1) return
+    if (this.count !== 1) return
     this.loading = Loading.service({
       lock: true,
       text: 'Loading',
       spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.0)',
+      background: 'rgba(0, 0, 0, 0.0)'
     })
   },
   /** unblock */
@@ -132,12 +135,12 @@ var http = {
     const res = await service.post(url, data, config).catch((err) => err)
     this.unblock()
     return handleResult(res)
-  },
+  }
 }
 
 export default {
   http: http,
   install(Vue, options) {
     Vue.prototype.$http = http
-  },
+  }
 }

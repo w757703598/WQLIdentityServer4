@@ -70,14 +70,14 @@ export default {
     ])
   },
   methods: {
- ...mapActions(['changeCollapse', 'signOutOidc', 'removeOidcUser']),
+    ...mapActions(['changeCollapse', 'signOutOidc', 'removeOidcUser']),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
       await this.signOutOidc()
-     await this.removeOidcUser()
-    },
+      await this.removeOidcUser()
+    }
   }
 }
 </script>

@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       message: '',
-      result: true,
+      result: true
     }
   },
 
@@ -62,11 +62,11 @@ export default {
       'oidcRefreshToken',
       'oidcRefreshTokenExp',
       'oidcAuthenticationIsChecked',
-      'oidcError',
+      'oidcError'
     ]),
     hasAccess: function() {
       return this.oidcIsAuthenticated || this.$route.meta.isPublic
-    },
+    }
   },
   mounted() {
     console.info(this)
@@ -76,22 +76,22 @@ export default {
 
     async weixin() {
       var axiosInstance = axios.create({
-        timeout: 1000,
+        timeout: 1000
       })
-      let message = {
+      const message = {
         msgtype: 'markdown',
         markdown: {
           content:
-            '<font color="warning"># 重要通知</font>，请相关同事注意: \n ><font color="comment">今天下午五点喝咖啡</font> ',
-        },
+            '<font color="warning"># 重要通知</font>，请相关同事注意: \n ><font color="comment">今天下午五点喝咖啡</font> '
+        }
       }
 
-      let res = await axiosInstance
+      const res = await axiosInstance
         .post(
           'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=5b7cb0c8-68d8-4b06-ba6c-9f9cee87cfdd',
           message,
           {
-            headers: { 'Content-Type': 'text/plain' },
+            headers: { 'Content-Type': 'text/plain' }
           }
         )
         .catch((err) => {
@@ -103,7 +103,7 @@ export default {
       }
     },
     async callApi() {
-      let res = await this.$http.get('/api/TestValue/Get')
+      const res = await this.$http.get('/api/TestValue/Get')
       if (res) {
         console.info(JSON.stringify(res))
         this.message = res
@@ -130,8 +130,8 @@ export default {
     },
     renewToken() {
       this.authenticateOidcSilent()
-    },
-  },
+    }
+  }
 }
 </script>
 

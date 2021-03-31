@@ -22,7 +22,7 @@
           <el-col
             :span="6"
             :offset="6"
-          >  
+          >
             <div class="tool-header-right">
               <el-button
                 type="success"
@@ -148,8 +148,8 @@
   </el-main>
 </template>
 <script>
-import ClientCreate from "../components/modules/ClientCreate";
-import ClientEdit from "../components/modules/ClientEdit";
+import ClientCreate from '../components/modules/ClientCreate'
+import ClientEdit from '../components/modules/ClientEdit'
 
 export default {
   components: {
@@ -162,94 +162,94 @@ export default {
       totalCount: 0,
       pageSize: 10,
       currentPage: 1,
-      search: "",
+      search: '',
       config: {
         show: false,
-        title: "",
-        type: 0, //0 创建
+        title: '',
+        type: 0, // 0 创建
         data: {}
       },
       editconfig: {
         show: false,
-        title: "",
-        type: 0, //0 创建
+        title: '',
+        type: 0, // 0 创建
         data: {}
       },
       multipleSelection: []
-    };
+    }
   },
   mounted() {
-    this.flush();
+    this.flush()
   },
   methods: {
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
     },
     async flush() {
-      let result = await this.$http.get("api/Client/GetClients", {
+      const result = await this.$http.get('api/Client/GetClients', {
         Search: this.search,
         isdesc: true,
         Page: this.currentPage,
         PageSize: this.pageSize
-      });
-      this.totalCount = result.totalCount;
-      this.Clients = result.data;
+      })
+      this.totalCount = result.totalCount
+      this.Clients = result.data
     },
     jump(path, row) {
-      this.$router.push({ name: path, query: { clientId: row.id } });
+      this.$router.push({ name: path, query: { clientId: row.id }})
     },
     create() {
-      this.config.title = "创建客户端";
-      this.config.data = {};
-      this.config.show = true;
-      this.config.type = 0;
+      this.config.title = '创建客户端'
+      this.config.data = {}
+      this.config.show = true
+      this.config.type = 0
     },
     edit(row) {
-      this.editconfig.type = 1;
-      this.editconfig.show = true;
-      this.editconfig.data = row;
+      this.editconfig.type = 1
+      this.editconfig.show = true
+      this.editconfig.data = row
     },
     deleteClient() {
       if (this.multipleSelection && this.multipleSelection.length) {
-        const ids = this.multipleSelection.map(item => item.id);
-        this.$confirm("确认删除所选客户端?", "删除", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+        const ids = this.multipleSelection.map(item => item.id)
+        this.$confirm('确认删除所选客户端?', '删除', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-          .then(async () => {
+          .then(async() => {
             for (let index = 0; index < ids.length; index++) {
-              let result = await this.$http.post(
-                "api/Client/RemoveClient",
-                ids[index]
-              );
+              console.info(JSON.stringify(ids[index]))
+              const result = await this.$http.post(
+                'api/Client/RemoveClient', ids[index]
+              )
               if (result) {
                 this.$message({
                   showClose: true,
-                  type: "success",
-                  message: "删除成功!"
-                });
+                  type: 'success',
+                  message: '删除成功!'
+                })
               }
             }
-            this.flush();
+            this.flush()
           })
           .catch(() => {
             this.$message({
               showClose: true,
-              type: "info",
-              message: "已取消删除!"
-            });
-          });
+              type: 'info',
+              message: '已取消删除!'
+            })
+          })
       } else {
         this.$message({
           showClose: true,
-          type: "warning",
-          message: "请选择要删除的客户端"
-        });
+          type: 'warning',
+          message: '请选择要删除的客户端'
+        })
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
