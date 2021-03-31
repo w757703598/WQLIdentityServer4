@@ -20,6 +20,10 @@
 ![服务端](/doc/imgs/server.bmp)
 - 客户端
 ![服务端](/doc/imgs/client.bmp)
+## :bow: 仓库地址
+[码云](https://gitee.com/wangqianlong1993/IdentityServer4)
+[github](https://github.com/w757703598/WQLIdentityServer4)
+
 ## :surfer: 演示地址
 [API地址](http://47.119.119.183:8081/)：统一授权认证登录
 [客户端](http://47.119.119.183:8082/)：vue客户端。管理界面
