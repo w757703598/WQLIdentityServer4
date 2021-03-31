@@ -21,7 +21,7 @@
 - 客户端
 ![服务端](/doc/imgs/client.bmp)
 ## :surfer: 演示地址
-[API地址](http://47.119.119.183:8081/)：统一授权认证登录  
+[API地址](http://47.119.119.183:8081/)：统一授权认证登录
 [客户端](http://47.119.119.183:8082/)：vue客户端。管理界面
 >默认账户：admin/123456
 >云服务配置较差,仅供演示.
@@ -62,7 +62,6 @@
 ## :video_game: Stars 趋势图
 
 [![Stargazers over time](https://whnb.wang/stars/wangqianlong1993/IdentityServer4?e=43200)](https://whnb.wang/dotnetchina/Furion?e=43200)
-
 ## :smiling_imp: 开发说明
 ### :heart:后台
 1. :sweat_drops: 最新功能在IdentityServer4_v4.0分支进行开发，请切换IdentityServer4_v4.0查看
