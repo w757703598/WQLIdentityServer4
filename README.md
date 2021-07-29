@@ -24,11 +24,11 @@
 [码云](https://gitee.com/wangqianlong1993/IdentityServer4)
 [github](https://github.com/w757703598/WQLIdentityServer4)
 
-## :surfer: 演示地址
+## :surfer: 演示地址 
 [API地址](http://47.119.119.183:8081/)：统一授权认证登录
 [客户端](http://47.119.119.183:8082/)：vue客户端。管理界面
 >默认账户：admin/123456
->云服务配置较差,仅供演示.
+>云服务配置欠费，后面再购买部署.
 
 ## :orange_book: 文档
 **待完善.....**
@@ -103,12 +103,13 @@
     - node下载的npm包，通过gulp自动清理合并。详细可了解[gulp](https://www.gulpjs.com.cn/).
 
 3. :sweat_drops: 数据迁移
-**采用EF完成orm功能。目前支持sqlserver和mysql两种功能。**
+**采用EF完成orm功能。目前支持sqlserver和mysql两种功能。**  
+    :smiling_imp: **注意：删除迁移数据库之前需要先删除已经生成的迁移Migrations文件夹。或者依次更新已经生成的Migration。** 
     **迁移数据库**
     ```
     #sqlserver 默认项目选择（WQLIdentity.Infra.Data）
-    Add-Migration InitialCreate -Context ConfigurationDbContext -OutputDir Migrations\Configuration\SqlServer
-    Add-Migration InitialCreate -Context PersistedGrantDbContext -OutputDir Migrations\PersistedGrant\SqlServer
+    Add-Migration InitialCreate -Context CustomConfigurationDbContext -OutputDir Migrations\Configuration\SqlServer
+    Add-Migration InitialCreate -Context CustomPersistedGrantDbContext -OutputDir Migrations\PersistedGrant\SqlServer
     Add-Migration InitialCreate -Context ApplicationDbContext -OutputDir Migrations\Application\SqlServer
     #mysql  默认项目选择（WQLIdentity.Infra.Data.Mysql）
     Add-Migration InitialCreate -Context MysqlConfigurationDbContext -OutputDir Migrations\Configuration\Mysql
@@ -118,8 +119,8 @@
     **更新数据库**  
     ```
     #sqlserver
-    update-database  -context ConfigurationDbContext
-    update-database  -context PersistedGrantDbContext
+    update-database  -context CustomConfigurationDbContext
+    update-database  -context CustomPersistedGrantDbContext
     update-database  -context ApplicationDbContext
     #mysql
     update-database  -context MysqlConfigurationDbContext
